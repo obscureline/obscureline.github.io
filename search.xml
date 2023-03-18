@@ -5,22 +5,22 @@
     
     <entry>
       <title>SQL概念</title>
-      <link href="/2023/03/15/SQL%E6%A6%82%E5%BF%B5/"/>
-      <url>/2023/03/15/SQL%E6%A6%82%E5%BF%B5/</url>
+      <link href="/2023/03/15/11.SQL%E6%A6%82%E5%BF%B5/"/>
+      <url>/2023/03/15/11.SQL%E6%A6%82%E5%BF%B5/</url>
       
         <content type="html"><![CDATA[<h1 id="SQL概念"><a href="#SQL概念" class="headerlink" title="SQL概念"></a>SQL概念</h1><h2 id="1-MyISAM和InnoDB的区别有哪些"><a href="#1-MyISAM和InnoDB的区别有哪些" class="headerlink" title="1.MyISAM和InnoDB的区别有哪些"></a>1.MyISAM和InnoDB的区别有哪些</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">InnoDB支持事务, MyISAM不支持.</span><br><span class="line">InnoDB支持行级锁, MyISAM支持表级锁.</span><br><span class="line">InnoDB支持多版本并发控制(MVVC), MyISAM不支持.</span><br><span class="line">InnoDB支持外键, MyISAM不支持.</span><br><span class="line">MyISAM支持全文索引, InnoDB部分版本不支持(但可以使用Sphinx插件)</span><br></pre></td></tr></table></figure><h2 id="2-MySQL事务的隔离级别-分别有什么特点"><a href="#2-MySQL事务的隔离级别-分别有什么特点" class="headerlink" title="2.MySQL事务的隔离级别,分别有什么特点"></a>2.MySQL事务的隔离级别,分别有什么特点</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1.读未提交(RU): 一个事务还没提交时, 它做的变更就能被别的事务看到.</span><br><span class="line">2.读提交(RC): 一个事务提交之后, 它做的变更才会被其他事务看到.</span><br><span class="line">3.可重复读(RR): 一个事务执行过程中看到的数据, 总是跟这个事务在启动时看到的数据是一致的. 当然在可重复读隔离级别下, 未提交变更对其他事务也是不可见的.</span><br><span class="line">4.串行化(S): 对于同一行记录, 读写都会加锁. 当出现读写锁冲突的时候, 后访问的事务必须等前一个事务执行完成才能继续执行.</span><br></pre></td></tr></table></figure><h2 id="3-数据库范式"><a href="#3-数据库范式" class="headerlink" title="3.数据库范式"></a>3.数据库范式</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">第一范式: 字段具有原子性,不可再分.</span><br><span class="line">第二范式: 在一范式的基础上, 要求数据库表中的每个实例或行必须可以被惟一地区分. 通常需要为</span><br><span class="line">表加上一个列, 以存储各个实例的惟一标识. 这个惟一属性列被称为主关键字或主键.</span><br><span class="line">第三范式: 在二范式的基础上, 要求一个数据库表中不包含已在其它表中已包含的非主关键字信息.</span><br><span class="line">所以第三范式具有如下特征：1). 每一列只有一个值. 2). 每一行都能区分. 3). 每一个表都不包含其</span><br><span class="line">他表已经包含的非主关键字信息.</span><br></pre></td></tr></table></figure><h2 id="4-MySQL锁"><a href="#4-MySQL锁" class="headerlink" title="4.MySQL锁"></a>4.MySQL锁</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1、表级锁：开销小，加锁快；不会出现死锁；锁定粒度大，发生锁冲突的概率最高，并发度最低。</span><br><span class="line">2、行级锁：开销大，加锁慢；会出现死锁；锁定粒度最小，发生锁冲突的概率最低，并发度也最高。</span><br><span class="line">3、页面锁：开销和加锁时间界于表锁和行锁之间；会出现死锁；锁定粒度界于表锁和行锁之间，并发度一般。</span><br></pre></td></tr></table></figure><h2 id="5-常见命令"><a href="#5-常见命令" class="headerlink" title="5.常见命令"></a>5.常见命令</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">NOW()和CURRENT_DATE()</span><br><span class="line">NOW()命令用于显示当前年份，月份，日期，小时，分钟和秒。</span><br><span class="line">CURRENT_DATE()仅显示当前年份，月份和日期。</span><br><span class="line"></span><br><span class="line">1、CONCAT(A,B) – 连接两个字符串值以创建单个字符串输出。通常用于将两个或多个字段合并为一个字段。</span><br><span class="line">2、FORMAT(X,D)- 格式化数字 X 到 D 有效数字。</span><br><span class="line">3、CURRDATE(), CURRTIME()- 返回当前日期或时间。</span><br><span class="line">4、NOW()– 将当前日期和时间作为一个值返回。</span><br><span class="line">5、MONTH()， DAY()，YEAR()，WEEK()，WEEKDAY() – 从日期值中提取给定数据。</span><br><span class="line">6、HOUR()，MINUTE()，SECOND() – 从时间值中提取给定数据。</span><br><span class="line">7、DATEDIFF(A，B) – 确定两个日期之间的差异， 通常用于计算年龄</span><br><span class="line">8、SUBTIMES(A，B) – 确定两次之间的差异。</span><br><span class="line">9、FROMDAYS(INT) – 将整数天数转换为日期值。</span><br></pre></td></tr></table></figure><h2 id="6-索引的底层实现原理和优化"><a href="#6-索引的底层实现原理和优化" class="headerlink" title="6.索引的底层实现原理和优化"></a>6.索引的底层实现原理和优化</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">B+树，经过优化的B+树</span><br><span class="line">主要是在所有的叶子结点中增加了指向下一个叶子节点的指针，因此 InnoDB 建议为大部分表使用默认自增的主键作为主索引。</span><br><span class="line"></span><br><span class="line">1、选取最适用的字段属性，尽可能减少定义字段宽度，尽量把字段设置NOTNULL，例如’省份’、’性别’最好适用ENUM</span><br><span class="line">2、使用连接(JOIN)来代替子查询</span><br><span class="line">3、适用联合(UNION)来代替手动创建的临时表</span><br><span class="line">4、事务处理</span><br><span class="line">5、锁定表、优化事务处理</span><br><span class="line">6、适用外键，优化锁定表</span><br><span class="line">7、建立索引</span><br><span class="line">8、优化查询语句</span><br></pre></td></tr></table></figure><h2 id="7-索引失效"><a href="#7-索引失效" class="headerlink" title="7.索引失效"></a>7.索引失效</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1、以“%”开头的LIKE语句，模糊匹配</span><br><span class="line">2、OR语句前后没有同时使用索引</span><br><span class="line">3、数据类型出现隐式转化（如varchar不加单引号的话可能会自动转换为int型）</span><br></pre></td></tr></table></figure><h2 id="8-主从复制读写分离"><a href="#8-主从复制读写分离" class="headerlink" title="8.主从复制读写分离"></a>8.主从复制读写分离</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">是通过将 Mysql 的某一台主机的数据复制到其它主机（slaves）上，并重新执行一遍来实现的</span><br><span class="line">1. 主服务器把更新记录到二进制日志文件中。 </span><br><span class="line">2. 从服务器把主服务器的二进制日志拷贝到自己的中继日志（replay log）中。 </span><br><span class="line">3. 从服务器重做中继日志中的时间，把更新应用到自己的数据库上。</span><br></pre></td></tr></table></figure><h2 id="一千万条数据的表-如何分页查询"><a href="#一千万条数据的表-如何分页查询" class="headerlink" title="一千万条数据的表,如何分页查询"></a>一千万条数据的表,如何分页查询</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">数据量过大的情况下, limit offset 分页会由于扫描数据太多而越往后查询越慢. 可以配合当前页最后一条ID进行查询, SELECT * FROM T WHERE id &gt; #&#123;ID&#125; LIMIT #&#123;LIMIT&#125; . 当然, 这种情况下ID必须是有序的, 这也是有序ID的好处之一.</span><br></pre></td></tr></table></figure>]]></content>
       
       
       <categories>
           
-          <category> SQL概念 </category>
+          <category> SQL </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> SQL概念 </tag>
+            <tag> SQL </tag>
             
         </tags>
       
@@ -30,22 +30,22 @@
     
     <entry>
       <title>Redis概念</title>
-      <link href="/2023/03/15/Redis/"/>
-      <url>/2023/03/15/Redis/</url>
+      <link href="/2023/03/15/10.Redis%E6%A6%82%E5%BF%B5/"/>
+      <url>/2023/03/15/10.Redis%E6%A6%82%E5%BF%B5/</url>
       
         <content type="html"><![CDATA[<h1 id="Redis概念"><a href="#Redis概念" class="headerlink" title="Redis概念"></a>Redis概念</h1><h2 id="Redis介绍"><a href="#Redis介绍" class="headerlink" title="Redis介绍"></a>Redis介绍</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">是一个高性能的 key-value 数据库; Redis 是单进程单线程</span><br><span class="line">支持事务，操作都是原子性，所谓的原子性就是对数据的更改要么全部执行，要么全部不执行</span><br><span class="line">String,list,set,hash,zset</span><br></pre></td></tr></table></figure><h2 id="Redis结构用法"><a href="#Redis结构用法" class="headerlink" title="Redis结构用法"></a>Redis结构用法</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">String:简单的键值对缓存</span><br><span class="line">List:存储列表型的数据结构</span><br><span class="line">Set:交集、并集、差集</span><br><span class="line">Hash:对象</span><br><span class="line">ZSet:去重且可排序[获取排名前几名的用户]</span><br><span class="line"></span><br><span class="line">Redis key的过期时间和永久有效分别怎么设置:</span><br><span class="line">expire和persist命令</span><br></pre></td></tr></table></figure><h2 id="Redis的持久化"><a href="#Redis的持久化" class="headerlink" title="Redis的持久化"></a>Redis的持久化</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">将内存中的数据异步写入硬盘中，两种方式：RDB（默认）和 AOF</span><br><span class="line"></span><br><span class="line">Redis 加载 RDB 恢复数据远远快于 AOF</span><br></pre></td></tr></table></figure><h2 id="Redis-内存淘汰机制"><a href="#Redis-内存淘汰机制" class="headerlink" title="Redis 内存淘汰机制"></a>Redis 内存淘汰机制</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">redis是个基于内存的缓存数据库，既然是基于内存的，那肯定就会有存满的时候</span><br><span class="line">如果真的存满了，再有新的数据过来肯定就存不进去了</span><br><span class="line">此时redis会执行既定的一些淘汰策略，本文大概讲一下redis六种淘汰策略</span><br><span class="line"></span><br><span class="line">1.noeviction(默认策略)：对于写请求不再提供服务，直接返回错误（DEL请求和部分特殊请求除外）</span><br><span class="line"></span><br><span class="line">2.allkeys-lru：从所有key中使用LRU算法进行淘汰（LRU算法：即最近最少使用算法）</span><br><span class="line"></span><br><span class="line">3.allkeys-random：从所有key中随机淘汰数据</span><br><span class="line"></span><br><span class="line">4.volatile-lru：从设置了过期时间的key中使用LRU算法进行淘汰</span><br><span class="line"></span><br><span class="line">5.volatile-random：从设置了过期时间的key中随机淘汰</span><br><span class="line"></span><br><span class="line">6.volatile-ttl：在设置了过期时间的key中，淘汰过期时间剩余最短的</span><br><span class="line"></span><br><span class="line">当使用volatile-lru、volatile-random、volatile-ttl这三种策略时，</span><br><span class="line">如果没有key可以被淘汰，则和noeviction一样返回错误</span><br></pre></td></tr></table></figure><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">1、获取当前内存淘汰策略：</span><br><span class="line">config get maxmemory-policy</span><br><span class="line">2、获取Redis能使用的最大内存大小</span><br><span class="line">config get maxmemory</span><br><span class="line">3、通过命令修改淘汰策略：</span><br><span class="line">config set maxmemory-policy allkeys-lru</span><br><span class="line">4、设置Redis最大占用内存大小</span><br><span class="line">config set maxmemory 100mb</span><br></pre></td></tr></table></figure><h2 id="Redis-过期键的删除策略"><a href="#Redis-过期键的删除策略" class="headerlink" title="Redis 过期键的删除策略"></a><strong>Redis 过期键的删除策略</strong></h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1、定时删除:在设置键的过期时间的同时，创建一个定时器 timer.让定时器在键的过期时间来临时，</span><br><span class="line">立即执行对键的删除操作。</span><br><span class="line">2、惰性删除:放任键过期不管，但是每次从键空间中获取键时，都检查取得的键是否过期，如果过期</span><br><span class="line">的话，就删除该键;如果没有过期，就返回该键。</span><br></pre></td></tr></table></figure><h2 id="Redis分布式锁"><a href="#Redis分布式锁" class="headerlink" title="Redis分布式锁"></a>Redis分布式锁</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">Redis为单进程单线程模式，采用队列模式将并发访问变成串行访问，且多客户端对Redis的连接并不存在竞争关系Redis中可以使用setNx命令实现分布式锁。</span><br><span class="line">当且仅当key不存在，将key的值设为value。若给定的key已经存在，则setNx不做任何动作</span><br><span class="line">SETNX是『SET if Not eXists』(如果不存在，则SET)的简写。</span><br><span class="line">返回值：设置成功，返回1。设置失败，返回0。</span><br><span class="line"></span><br><span class="line">*单机锁JVM:项目简单，单机部署，无集群</span><br><span class="line">1.Synchronized关键字</span><br><span class="line">2.ReentrantLock对象</span><br><span class="line"></span><br><span class="line">*分布式锁:</span><br><span class="line">setnx:如果key不存在，就创建，否则失败</span><br><span class="line">1.使用递归判断</span><br><span class="line">2.for循环判断</span><br><span class="line">3.Redisson分布式锁</span><br><span class="line"></span><br><span class="line">*防死锁</span><br><span class="line">添加过期时间</span><br><span class="line">一行redis命令解决expire</span><br><span class="line">目的是保证原子性</span><br><span class="line">*防误删</span><br><span class="line">利用线程ID或UUID给锁命名，删除前判断是不是自己的锁</span><br><span class="line"></span><br><span class="line">Redisson分布式锁-框架</span><br><span class="line">Redisson,是一个在Redis的基础上实现的Java驻内存数据网格。它不仅提供了一系列的分布式的ava常用对象,还</span><br><span class="line">提供了许多分布式服务。</span><br><span class="line">Jedis侧重于对Redis的增删改查，而Redisson侧重于职责分离。</span><br><span class="line">四层保护:防死锁、防误删、可重入、自动续期</span><br><span class="line">1.导入maven依赖</span><br><span class="line">2.配置客户端Bean</span><br><span class="line">3.lock  unlock</span><br><span class="line"></span><br><span class="line">1.为什么用分布式锁</span><br><span class="line">分布式锁主要用来解决集群部署下的数据安全问题</span><br><span class="line">集群部署情况下，单机锁无法保证外部资源的访问安全性</span><br><span class="line"></span><br><span class="line">2.Rediss分布式锁怎么防止死锁问题</span><br><span class="line">解释什么情况下会产生分布式锁中的死锁</span><br><span class="line">解决方案：设置过期时间expire（+自动续期)</span><br><span class="line"></span><br><span class="line">3.Redis分布式锁怎么防止误删</span><br><span class="line">什么情况下会产生分布式锁中的误删？</span><br><span class="line">解决方案：使用UUID设置锁的value,删之前判断一下</span><br><span class="line"></span><br><span class="line">如果追求高并发和性能，推荐Redis:分布式锁</span><br><span class="line">Redisson底层是用LUA脚本来实现原子性的</span><br></pre></td></tr></table></figure><h2 id="Redis缓存穿透、击穿、雪崩"><a href="#Redis缓存穿透、击穿、雪崩" class="headerlink" title="Redis缓存穿透、击穿、雪崩"></a>Redis缓存穿透、击穿、雪崩</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">什么是缓存穿透？</span><br><span class="line">我们使用Redis大部分情况都是通过Key查询对应的值，假如发送的请求传进来的key是不存在Redis中的，那么就查不到缓存，查不到缓存就会去数据库查询。假如有大量这样的请求，这些请求像“穿透”了缓存一样直接打在数据库上，这种现象就叫做缓存穿透。</span><br><span class="line">分析：</span><br><span class="line">关键在于在Redis查不到key值，这和缓存击穿有根本的区别，区别在于缓存穿透的情况是传进来的key在Redis中是不存在的。假如有黑客传进大量的不存在的key，那么大量的请求打在数据库上是很致命的问题，所以在日常开发中要对参数做好校验，一些非法的参数，不可能存在的key就直接返回错误提示，要对调用方保持这种“不信任”的心态。、</span><br><span class="line">解决方案：</span><br><span class="line">1、把无效的Key存进Redis中。如果Redis查不到数据，数据库也查不到，我们把这个Key值保存进Redis，设置value=&quot;null&quot;，当下次再通过这个Key查询时就不需要再查询数据库。这种处理方式肯定是有问题的，假如传进来的这个不存在的Key值每次都是随机的，那存进Redis也没有意义。</span><br><span class="line">2、使用布隆过滤器。布隆过滤器的作用是某个 key 不存在，那么就一定不存在，它说某个 key 存在，那么很大可能是存在(存在一定的误判率)。于是我们可以在缓存之前再加一层布隆过滤器，在查询的时候先去布隆过滤器查询 key 是否存在，如果不存在就直接返回。</span><br><span class="line"></span><br><span class="line">什么是缓存击穿？</span><br><span class="line">缓存击穿是一个热点的Key，有大并发集中对其进行访问，突然间这个Key失效了，导致大并发全部打在数据库上，导致数据库压力剧增。这种现象就叫做缓存击穿。</span><br><span class="line">分析：关键在于某个热点的key失效了，导致大并发集中打在数据库上。所以要从两个方面解决，第一是否可以考虑热点key不设置过期时间，第二是否可以考虑降低打在数据库上的请求数量。</span><br><span class="line">解决方案：</span><br><span class="line">1、上面说过了，如果业务允许的话，对于热点的key可以设置永不过期的key。</span><br><span class="line">2、使用互斥锁。如果缓存失效的情况，只有拿到锁才可以查询数据库，降低了在同一时刻打在数据库上的请求，防止数据库打死。当然这样会导致系统的性能变差。</span><br><span class="line"></span><br><span class="line">什么是缓存雪崩？</span><br><span class="line">当某一个时刻出现大规模的缓存失效的情况，那么就会导致大量的请求直接打在数据库上面，导致数据库压力巨大，如果在高并发的情况下，可能瞬间就会导致数据库宕机。这时候如果运维马上又重启数据库，马上又会有新的流量把数据库打死。这就是缓存雪崩。</span><br><span class="line">分析：造成缓存雪崩的关键在于在同一时间大规模的key失效。为什么会出现这个问题呢，有几种可能，第一种可能是Redis宕机，第二种可能是采用了相同的过期时间。搞清楚原因之后，那么有什么解决方案呢？</span><br><span class="line">解决方案：</span><br><span class="line">1、在原有的失效时间上加上一个随机值，比如1-5分钟随机。这样就避免了因为采用相同的过期时间导致的缓存雪崩。</span><br><span class="line">如果真的发生了缓存雪崩，有没有什么兜底的措施？</span><br><span class="line">2、使用熔断机制。当流量到达一定的阈值时，就直接返回“系统拥挤”之类的提示，防止过多的请求打在数据库上。至少能保证一部分用户是可以正常使用，其他用户多刷新几次也能得到结果。</span><br><span class="line">3、提高数据库的容灾能力，可以使用分库分表，读写分离的策略。</span><br><span class="line">4、为了防止Redis宕机导致缓存雪崩的问题，可以搭建Redis集群，提高Redis的容灾性。</span><br></pre></td></tr></table></figure>]]></content>
       
       
       <categories>
           
-          <category> Redis概念 </category>
+          <category> Redis </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> Redis概念 </tag>
+            <tag> Redis </tag>
             
         </tags>
       
@@ -55,8 +55,8 @@
     
     <entry>
       <title>RabbitMQ</title>
-      <link href="/2023/03/15/RabbitMQ/"/>
-      <url>/2023/03/15/RabbitMQ/</url>
+      <link href="/2023/03/15/9.RabbitMQ/"/>
+      <url>/2023/03/15/9.RabbitMQ/</url>
       
         <content type="html"><![CDATA[<h1 id="RabbitMQ"><a href="#RabbitMQ" class="headerlink" title="RabbitMQ"></a>RabbitMQ</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">微服务间通讯有同步和异步两种方式：</span><br><span class="line"></span><br><span class="line">同步通讯：就像打电话，需要实时响应。</span><br><span class="line">异步通讯：就像发邮件，不需要马上回复。</span><br></pre></td></tr></table></figure><h5 id="同步通讯"><a href="#同步通讯" class="headerlink" title="同步通讯"></a>同步通讯</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Feign调用就属于同步方式，虽然调用可以实时得到结果</span><br></pre></td></tr></table></figure><h5 id="异步通讯"><a href="#异步通讯" class="headerlink" title="异步通讯"></a>异步通讯</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">两者并不是直接通信，而是有一个中间人（Broker）。发布者发布事件到Broker，不关心谁来订阅事件。订阅者从Broker订阅事件，不关心谁发来的消息。</span><br></pre></td></tr></table></figure><h2 id="简单队列模式的模型图"><a href="#简单队列模式的模型图" class="headerlink" title="简单队列模式的模型图"></a>简单队列模式的模型图</h2><img src="C:\Users\ME\AppData\Roaming\Typora\typora-user-images\image-20230216135751240.png" alt="image-20230216135751240" style="zoom:80%;" /><h2 id="RabbitMQ的使用场景"><a href="#RabbitMQ的使用场景" class="headerlink" title="RabbitMQ的使用场景"></a>RabbitMQ的使用场景</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.异步处理</span><br><span class="line"></span><br><span class="line">2.应用解耦</span><br><span class="line"></span><br><span class="line">3.流量削峰</span><br></pre></td></tr></table></figure><h2 id="六种队列"><a href="#六种队列" class="headerlink" title="六种队列"></a>六种队列</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1.simple简单模式</span><br></pre></td></tr></table></figure><img src="C:\Users\ME\AppData\Roaming\Typora\typora-user-images\image-20230315162020723.png" alt="image-20230315162020723" style="zoom:80%;" /><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2.work工作模式(资源的竞争)</span><br></pre></td></tr></table></figure><img src="C:\Users\ME\AppData\Roaming\Typora\typora-user-images\image-20230315162055889.png" alt="image-20230315162055889" style="zoom:80%;" /><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">3.publish/subscribe发布订阅(共享资源)</span><br></pre></td></tr></table></figure><img src="C:\Users\ME\AppData\Roaming\Typora\typora-user-images\image-20230315162121898.png" alt="image-20230315162121898" style="zoom:80%;" /><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">4.routing路由模式</span><br></pre></td></tr></table></figure><img src="C:\Users\ME\AppData\Roaming\Typora\typora-user-images\image-20230315162215436.png" alt="image-20230315162215436" style="zoom:80%;" /><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">5.topic 主题模式(路由模式的一种)</span><br></pre></td></tr></table></figure><img src="C:\Users\ME\AppData\Roaming\Typora\typora-user-images\image-20230315162239577.png" alt="image-20230315162239577" style="zoom:80%;" />]]></content>
       
@@ -79,52 +79,100 @@
     
     
     <entry>
-      <title>Hello World</title>
-      <link href="/2023/03/14/hello-world%20copy%203/"/>
-      <url>/2023/03/14/hello-world%20copy%203/</url>
+      <title>MyBatisPlus</title>
+      <link href="/2023/03/14/8.MyBatisPlus/"/>
+      <url>/2023/03/14/8.MyBatisPlus/</url>
       
         <content type="html"><![CDATA[<h1 id="Welcome-To-ObscureLine"><a href="#Welcome-To-ObscureLine" class="headerlink" title="Welcome To ObscureLine"></a>Welcome To ObscureLine</h1>]]></content>
       
       
+      <categories>
+          
+          <category> MyBatisPlus </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> MyBatisPlus </tag>
+            
+        </tags>
       
     </entry>
     
     
     
     <entry>
-      <title>Hello World</title>
-      <link href="/2023/03/14/hello-world%20copy%202/"/>
-      <url>/2023/03/14/hello-world%20copy%202/</url>
+      <title>MyBatis</title>
+      <link href="/2023/03/14/7.MyBatis/"/>
+      <url>/2023/03/14/7.MyBatis/</url>
       
         <content type="html"><![CDATA[<h1 id="Welcome-To-ObscureLine"><a href="#Welcome-To-ObscureLine" class="headerlink" title="Welcome To ObscureLine"></a>Welcome To ObscureLine</h1>]]></content>
       
       
+      <categories>
+          
+          <category> MyBatis </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> MyBatis </tag>
+            
+        </tags>
       
     </entry>
     
     
     
     <entry>
-      <title>Hello World</title>
-      <link href="/2023/03/14/hello-world%20copy/"/>
-      <url>/2023/03/14/hello-world%20copy/</url>
+      <title>SpringMVC</title>
+      <link href="/2023/03/14/6.SpringMVC/"/>
+      <url>/2023/03/14/6.SpringMVC/</url>
       
         <content type="html"><![CDATA[<h1 id="Welcome-To-ObscureLine"><a href="#Welcome-To-ObscureLine" class="headerlink" title="Welcome To ObscureLine"></a>Welcome To ObscureLine</h1>]]></content>
       
       
+      <categories>
+          
+          <category> SpringMVC </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> SpringMVC </tag>
+            
+        </tags>
       
     </entry>
     
     
     
     <entry>
-      <title></title>
-      <link href="/2023/03/12/Spring/"/>
-      <url>/2023/03/12/Spring/</url>
+      <title>Spring</title>
+      <link href="/2023/03/12/5.Spring/"/>
+      <url>/2023/03/12/5.Spring/</url>
       
         <content type="html"><![CDATA[]]></content>
       
       
+      <categories>
+          
+          <category> Spring </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Spring </tag>
+            
+        </tags>
       
     </entry>
     
@@ -132,8 +180,8 @@
     
     <entry>
       <title>Linux</title>
-      <link href="/2023/03/12/Linux/"/>
-      <url>/2023/03/12/Linux/</url>
+      <link href="/2023/03/12/4.Linux/"/>
+      <url>/2023/03/12/4.Linux/</url>
       
         <content type="html"><![CDATA[<h1 id="1-Linux常见命令"><a href="#1-Linux常见命令" class="headerlink" title="1.Linux常见命令"></a>1.Linux常见命令</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">1. ls：显示目录或文件的列表</span><br><span class="line">2. cd：切换目录</span><br><span class="line">3. pwd：显示当前工作目录的绝对路径</span><br><span class="line">4. mkdir：创建新目录</span><br><span class="line">5. rmdir：删除空目录</span><br><span class="line">6. touch：创建新文件或修改文件时间戳</span><br><span class="line">7. cp：复制文件或目录</span><br><span class="line">8. mv：移动或重命名文件或目录</span><br><span class="line">9. rm：删除文件或目录</span><br><span class="line">10. cat：查看文件内容</span><br><span class="line">11. chmod：修改文件或目录的权限</span><br><span class="line">12. chown：修改文件或目录的所有者</span><br><span class="line">13. chgrp：修改文件或目录的所属组</span><br><span class="line">14. ps：查看进程信息</span><br><span class="line">15. top：实时查看系统资源使用情况</span><br><span class="line">16. du：查看文件或目录占用磁盘空间的大小</span><br><span class="line">17. df：查看磁盘空间使用情况</span><br><span class="line">18. echo：输出文本内容</span><br><span class="line">19. grep：在文件中查找指定字符串</span><br><span class="line">20. tar：打包或解包文件</span><br><span class="line">21. unzip：解压缩zip压缩文件</span><br><span class="line">22. curl：从服务器获取数据</span><br><span class="line">23. wget：从Web服务器下载文件</span><br><span class="line">24. ping：测试网络连接</span><br><span class="line">25. ifconfig/ip：显示网络接口的配置信息</span><br><span class="line">26. ssh：建立安全的远程连接</span><br><span class="line">27. scp：将文件从本地复制到远程主机上</span><br><span class="line">28. crontab：定时任务管理工具</span><br><span class="line">29. systemctl/service：查看和管理系统服务</span><br><span class="line">30. history：查看命令历史记录。</span><br></pre></td></tr></table></figure>]]></content>
       
@@ -156,9 +204,9 @@
     
     
     <entry>
-      <title>SQL</title>
-      <link href="/2023/03/12/SQL/"/>
-      <url>/2023/03/12/SQL/</url>
+      <title>SQL日常优化</title>
+      <link href="/2023/03/12/3.SQL%E6%97%A5%E5%B8%B8%E4%BD%BF%E7%94%A8/"/>
+      <url>/2023/03/12/3.SQL%E6%97%A5%E5%B8%B8%E4%BD%BF%E7%94%A8/</url>
       
         <content type="html"><![CDATA[<h1 id="1-获取系统当前时间"><a href="#1-获取系统当前时间" class="headerlink" title="1.获取系统当前时间"></a>1.获取系统当前时间</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">MySQL:</span><br><span class="line">SELECT NOW();</span><br><span class="line">NOW()函数返回当前日期和时间，格式为&quot;YYYY-MM-DD HH:MM:SS&quot;。</span><br><span class="line"></span><br><span class="line">Oracle:</span><br><span class="line">SELECT SYSDATE FROM DUAL;</span><br></pre></td></tr></table></figure><h1 id="2-分页"><a href="#2-分页" class="headerlink" title="2.分页"></a>2.分页</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">MySQL:</span><br><span class="line">Limit</span><br><span class="line"></span><br><span class="line">Oracle:</span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span></span><br><span class="line"><span class="keyword">FROM</span> (</span><br><span class="line">  <span class="keyword">SELECT</span> t.<span class="operator">*</span>, ROWNUM rn</span><br><span class="line">  <span class="keyword">FROM</span> table_name t</span><br><span class="line">  <span class="keyword">WHERE</span> ...</span><br><span class="line">  <span class="keyword">ORDER</span> <span class="keyword">BY</span> ...</span><br><span class="line">)</span><br><span class="line"><span class="keyword">WHERE</span> rn <span class="keyword">BETWEEN</span> start_row <span class="keyword">AND</span> end_row;</span><br></pre></td></tr></table></figure><h1 id="3-空值转换函数"><a href="#3-空值转换函数" class="headerlink" title="3.空值转换函数"></a>3.空值转换函数</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">NVL函数是一个空值转换函数</span><br><span class="line">如果表达式1为空值，NVL返回值为表达式2的值，否则返回表达式1的值</span><br><span class="line"></span><br><span class="line">其表达式的值可以是数字型、字符型和日期型。但是表达式1和表达式2的数据类型必须为同一个类型。</span><br><span class="line">对数字型： NVL（ comm,0);</span><br><span class="line">对字符型 NVL( TO_CHAR(comm), &#x27;No Commission&#x27;)</span><br><span class="line">对日期型 NVL（hiredate,&#x27; 31-DEC-99&#x27;)</span><br></pre></td></tr></table></figure><h1 id="4-SQL的索引"><a href="#4-SQL的索引" class="headerlink" title="4.SQL的索引"></a>4.SQL的索引</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">索引是关系型数据库中的重要组件，它可以提高数据库的查询性能。通过索引，可以快速高效地定位到需要查询的数据，减少数据库的IO操作，从而提高数据库的查询速度和性能。</span><br><span class="line"></span><br><span class="line">SQL中的索引可以分为以下几种类型：</span><br><span class="line">1. 唯一索引：保证索引列的所有值都是唯一的，即不允许重复值。</span><br><span class="line">2. 主键索引：特殊的唯一索引，用于保证表中每行数据的唯一性。</span><br><span class="line">3. 外键索引：用于实现表与表之间的关联，保证引用了外键的字段值必须是被引用表的主键值。</span><br><span class="line">4. 聚簇索引：物理存储上按照索引列排序并存储数据，可以提高查询效率。</span><br><span class="line">5. 非聚簇索引：物理存储上不按照索引列排序存储数据，查询时需要通过指针查找数据，速度相对较慢。</span><br><span class="line">6. 全文索引：用于对文本内容进行高效的查询，支持模糊查询和关键字搜索等。</span><br><span class="line">7. 组合索引：一种同时包含多个列的索引，可以提高复合条件查询的效率。</span><br><span class="line"></span><br><span class="line">总之，选择合适的索引类型，并且正确地创建和使用索引，可以大大提高数据库的性能和查询效率。</span><br></pre></td></tr></table></figure><h1 id="5-SQL事务"><a href="#5-SQL事务" class="headerlink" title="5.SQL事务"></a>5.SQL事务</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ACID</span><br><span class="line">原子性：一个事务中的所有 SQL 语句，要么全部执行成功，要么全部执行失败</span><br><span class="line">一致性：事务开始之前和事务结束以后，数据库的完整性没有被破坏</span><br><span class="line">隔离性：数据库允许多个并发事务同时对其数据进行读写和修改的能力，隔离性可以防止多个事务并发执行时由于交叉执行而导致数据的不一致</span><br><span class="line">持久性：数据库允许多个并发事务同时对其数据进行读写和修改的能力，隔离性可以防止多个事务并发执行时由于交叉执行而导致数据的不一致</span><br></pre></td></tr></table></figure><h1 id="6-事务隔离级别"><a href="#6-事务隔离级别" class="headerlink" title="6.事务隔离级别"></a>6.事务隔离级别</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">事务隔离分为不同级别，包括</span><br><span class="line">读未提交（Read uncommitted）、</span><br><span class="line">读提交（read committed）、</span><br><span class="line">可重复读（repeatable read）</span><br><span class="line">串行化（Serializable）。</span><br></pre></td></tr></table></figure><h1 id="7-SQL约束"><a href="#7-SQL约束" class="headerlink" title="7.SQL约束"></a>7.SQL约束</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">NOT NULL - 指示某列不能存储 NULL 值。</span><br><span class="line">UNIQUE - 保证某列的每行必须有唯一的值。</span><br><span class="line">PRIMARY KEY - NOT NULL 和 UNIQUE 的结合。确保某列（或两个列多个列的结合）有唯一标识，有助于更容易更快速地找到表中的一个特定的记录。</span><br><span class="line">FOREIGN KEY - 保证一个表中的数据匹配另一个表中的值的参照完整性。</span><br><span class="line">CHECK - 保证列中的值符合指定的条件。</span><br><span class="line">DEFAULT - 规定没有给列赋值时的默认值</span><br></pre></td></tr></table></figure>]]></content>
       
@@ -182,22 +230,22 @@
     
     <entry>
       <title>SQL优化</title>
-      <link href="/2023/03/12/SQL%E4%BC%98%E5%8C%96/"/>
-      <url>/2023/03/12/SQL%E4%BC%98%E5%8C%96/</url>
+      <link href="/2023/03/12/2.SQL%E4%BC%98%E5%8C%96/"/>
+      <url>/2023/03/12/2.SQL%E4%BC%98%E5%8C%96/</url>
       
         <content type="html"><![CDATA[<h1 id="SQL"><a href="#SQL" class="headerlink" title="SQL"></a>SQL</h1><h2 id="SQL优化"><a href="#SQL优化" class="headerlink" title="SQL优化"></a>SQL优化</h2><h3 id="1-避免使用-select"><a href="#1-避免使用-select" class="headerlink" title="1.避免使用 select *"></a>1.避免使用 select *</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select * 不会走覆盖索引，会出现大量的回表操作，而从导致查询 sql 的性能很低。</span><br><span class="line">多查出来的数据，通过网络 IO 传输的过程中，也会增加数据传输的时间。</span><br></pre></td></tr></table></figure><h3 id="2-用-union-all-代替-union"><a href="#2-用-union-all-代替-union" class="headerlink" title="2.用 union all 代替 union"></a>2.用 union all 代替 union</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">使用 union 关键字后，可以获取排重后的数据。</span><br><span class="line">使用 union all 关键字，可以获取所有数据，包含重复的数据。</span><br><span class="line"></span><br><span class="line">排重的过程需要遍历、排序和比较，它更耗时，更消耗 cpu 资源。</span><br><span class="line">除非，业务场景中是不允许产生重复数据的，这时可以使用 union。</span><br></pre></td></tr></table></figure><h3 id="3-小表驱动大表"><a href="#3-小表驱动大表" class="headerlink" title="3.小表驱动大表"></a>3.小表驱动大表</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">可以使用 in 关键字实现：</span><br><span class="line">select * from order</span><br><span class="line">where user_id in (select id from user where status=1)</span><br><span class="line"></span><br><span class="line">可以使用 exists 关键字实现：</span><br><span class="line">select * from order</span><br><span class="line">where exists (select 1 from user where order.user_id = user.id and status=1)</span><br><span class="line"></span><br><span class="line">in 适用于左边大表，右边小表。</span><br><span class="line">exists 适用于左边小表，右边大表。</span><br></pre></td></tr></table></figure><h3 id="4-批量操作"><a href="#4-批量操作" class="headerlink" title="4.批量操作"></a>4.批量操作</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">orderMapper.insertBatch(list):</span><br><span class="line">尽量少请求连接数据库</span><br><span class="line">建议每批数据尽量控制在 500 以内。如果数据多于 500，则分多批次处理</span><br></pre></td></tr></table></figure><h3 id="5-多用-limit"><a href="#5-多用-limit" class="headerlink" title="5.多用 limit"></a>5.多用 limit</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">使用 limit 1，只返回该用户下单时间最小的那一条数据</span><br></pre></td></tr></table></figure><h3 id="6-in-中值太多"><a href="#6-in-中值太多" class="headerlink" title="6.in 中值太多"></a>6.in 中值太多</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> List&lt;Category&gt; <span class="title function_">getCategory</span><span class="params">(List&lt;Long&gt; ids)</span> &#123;</span><br><span class="line">   <span class="keyword">if</span>(CollectionUtils.isEmpty(ids)) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">if</span>(ids.size() &gt; <span class="number">500</span>) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">BusinessException</span>(<span class="string">&quot;一次最多允许查询500条记录&quot;</span>)</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> mapper.getCategoryList(ids);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">超过 <span class="number">500</span> 条记录，可以分批用多线程去查询数据。每批只查 <span class="number">500</span> 条记录，最后把查询到的数据汇总到一起返回。</span><br><span class="line">    </span><br><span class="line">临时方案，不适合于 ids 实在太多的场景。因为 ids 太多，即使能快速查出数据，但如果返回的数据量太大了，网络传输也是非常消耗性能的，接口性能始终好不到哪里去。</span><br></pre></td></tr></table></figure><h3 id="7-增量查询"><a href="#7-增量查询" class="headerlink" title="7.增量查询"></a>7.增量查询</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">按 id 和时间升序，每次只同步一批数据，这一批数据只有 100 条记录。每次同步完成之后，保存这 100 条数据中最大的 id 和时间，给同步下一批数据的时候用。</span><br><span class="line"></span><br><span class="line">通过这种增量查询的方式，能够提升单次查询的效率。</span><br></pre></td></tr></table></figure><h3 id="8-高效的分页"><a href="#8-高效的分页" class="headerlink" title="8.高效的分页"></a>8.高效的分页</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">列表页在查询数据时，为了避免一次性返回过多的数据影响接口性能，我们一般会对查询接口做分页处理。</span><br></pre></td></tr></table></figure><h3 id="9-用连接查询代替子查询"><a href="#9-用连接查询代替子查询" class="headerlink" title="9.用连接查询代替子查询"></a>9.用连接查询代替子查询</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql 执行子查询时，需要创建临时表，查询完毕后，需要再删除这些临时表，有一些额外的性能消耗。</span><br><span class="line">子查询语句的优点是简单，结构化，如果涉及的表数量不多的话。</span><br><span class="line"></span><br><span class="line">连接查询（内连接）</span><br></pre></td></tr></table></figure><h3 id="10-join-的表不宜过多"><a href="#10-join-的表不宜过多" class="headerlink" title="10.join 的表不宜过多"></a>10.join 的表不宜过多</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">根据阿里巴巴开发者手册的规定，join 表的数量不应该超过 3 个</span><br><span class="line"></span><br><span class="line">join 表的数量要根据系统的实际情况决定，不能一概而论，尽量越少越好</span><br></pre></td></tr></table></figure><h3 id="11-join-时要注意"><a href="#11-join-时要注意" class="headerlink" title="11.join 时要注意"></a>11.join 时要注意</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">涉及到多张表联合查询的时候，一般会使用 join 关键字</span><br><span class="line"></span><br><span class="line">如果两张表使用 inner join 关联，mysql 会自动选择两张表中的小表，去驱动大表，所以性能上不会有太大的问题</span><br><span class="line"></span><br><span class="line">如果两张表使用 left join 关联，mysql 会默认用 left join 关键字左边的表，去驱动它右边的表。如果左边的表数据很多时，就会出现性能问题。</span><br><span class="line"></span><br><span class="line">要特别注意的是在用 left join 关联查询时，左边要用小表，右边可以用大表。如果能用 inner join 的地方，尽量少用 left join。</span><br></pre></td></tr></table></figure><h3 id="12-控制索引的数量"><a href="#12-控制索引的数量" class="headerlink" title="12.控制索引的数量"></a>12.控制索引的数量</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">索引能够显著的提升查询 sql 的性能，但索引数量并非越多越好。</span><br><span class="line">因为表中新增数据时，需要同时为它创建索引，而索引是需要额外的存储空间的，而且还会有一定的性能消耗。</span><br><span class="line"></span><br><span class="line">阿里巴巴的开发者手册中规定，单表的索引数量应该尽量控制在 5 个以内，并且单个索引中的字段数不超过 5 个。</span><br><span class="line">mysql 使用的 B + 树的结构来保存索引的，在 insert、update 和 delete 操作时，需要更新 B + 树索引。如果索引过多，会消耗很多额外的性能。</span><br><span class="line"></span><br><span class="line">但对于一些高并发的系统，请务必遵守单表索引数量不要超过 5 的限制。</span><br><span class="line">能够建联合索引，就别建单个索引，可以删除无用的单个索引。</span><br><span class="line"></span><br><span class="line">将部分查询功能迁移到其他类型的数据库中，比如：Elastic Seach、HBase 等，在业务表中只需要建几个关键索引即可。</span><br></pre></td></tr></table></figure><h3 id="13-选择合理的字段类型"><a href="#13-选择合理的字段类型" class="headerlink" title="13.选择合理的字段类型"></a>13.选择合理的字段类型</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">char 表示固定字符串类型，该类型的字段存储空间的固定的，会浪费存储空间。</span><br><span class="line">varchar 表示变长字符串类型，该类型的字段存储空间会根据实际数据的长度调整，不会浪费存储空间。</span><br><span class="line"></span><br><span class="line">能用数字类型，就不用字符串，因为字符的处理往往比数字要慢。</span><br><span class="line">尽可能使用小的类型，比如：用 bit 存布尔值，用 tinyint 存枚举值等。</span><br><span class="line">长度固定的字符串字段，用 char 类型。</span><br><span class="line">长度可变的字符串字段，用 varchar 类型。</span><br><span class="line">金额字段用 decimal，避免精度丢失问题。</span><br></pre></td></tr></table></figure><h3 id="14-提升-group-by-的效率"><a href="#14-提升-group-by-的效率" class="headerlink" title="14.提升 group by 的效率"></a>14.提升 group by 的效率</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">group by 关键字，它主要的功能是去重和分组。</span><br><span class="line">通常它会跟 having 一起配合使用，表示分组后再根据一定的条件过滤数据。</span><br><span class="line"></span><br><span class="line">sql 语句在做一些耗时的操作之前，应尽可能缩小数据范围，这样能提升 sql 整体的性能。</span><br></pre></td></tr></table></figure><h3 id="15-索引优化"><a href="#15-索引优化" class="headerlink" title="15.索引优化"></a>15.索引优化</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sql 语句，走了索引，和没有走索引，执行效率差别很大。所以索引优化被作为 sql 优化的首选。</span><br><span class="line"></span><br><span class="line">查看 mysql 的执行计划:</span><br><span class="line">explain select * from `order` where code=&#x27;002&#x27;;</span><br></pre></td></tr></table></figure><p>执行计划包含列的含义</p><p><img src="https://pic.imgdb.cn/item/618bcb752ab3f51d910ae306.jpg" alt="img"></p><p>索引失效的常见原因</p><p><img src="https://pic.imgdb.cn/item/618bcb872ab3f51d910ae8ed.jpg" alt="img"></p><h3 id="16-索引优化"><a href="#16-索引优化" class="headerlink" title="16.索引优化"></a>16.索引优化</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1.最左前缀匹配原则</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
       
       
       <categories>
           
-          <category> SQL优化 </category>
+          <category> SQL </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> SQL优化 </tag>
+            <tag> SQL </tag>
             
         </tags>
       
@@ -207,12 +255,24 @@
     
     <entry>
       <title>Hello World</title>
-      <link href="/2023/03/12/hello-world/"/>
-      <url>/2023/03/12/hello-world/</url>
+      <link href="/2023/03/12/1.hello-world/"/>
+      <url>/2023/03/12/1.hello-world/</url>
       
-        <content type="html"><![CDATA[<h1 id="Welcome-To-ObscureLine"><a href="#Welcome-To-ObscureLine" class="headerlink" title="Welcome To ObscureLine"></a>Welcome To ObscureLine</h1>]]></content>
+        <content type="html"><![CDATA[<h1 id="Hello-World-Welcome-To-ObscureLine"><a href="#Hello-World-Welcome-To-ObscureLine" class="headerlink" title="Hello World Welcome To ObscureLine"></a>Hello World Welcome To ObscureLine</h1>]]></content>
       
       
+      <categories>
+          
+          <category> Hello World </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Hello World </tag>
+            
+        </tags>
       
     </entry>
     
