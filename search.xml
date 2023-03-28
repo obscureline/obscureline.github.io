@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>JSON</title>
+      <link href="/2023/03/26/19.JSON/"/>
+      <url>/2023/03/26/19.JSON/</url>
+      
+        <content type="html"><![CDATA[<h1 id="JSONObject和JSONArray区别及基本用法"><a href="#JSONObject和JSONArray区别及基本用法" class="headerlink" title="JSONObject和JSONArray区别及基本用法"></a>JSONObject和JSONArray区别及基本用法</h1><h2 id="一、JSONObject和JSONArray的数据表示形式"><a href="#一、JSONObject和JSONArray的数据表示形式" class="headerlink" title="一、JSONObject和JSONArray的数据表示形式"></a>一、JSONObject和JSONArray的数据表示形式</h2><p>JSONObject的数据是用 {  } 来表示的，</p><p>例如:<br>{ “id” : “123”, “courseID” : “huangt-test”, “title” : “提交作业”, “content” : null  }</p><p>而JSONArray，顾名思义是由JSONObject构成的数组，用  [ { } , { } , ……  , { } ]  来表示</p><p>例如:<br>[ {  “id” : “123”, “courseID” : “huangt-test”, “title” : “提交作业” },<br>{  “content” : null, “beginTime” : 1398873600000  “endTime” } ]</p><p>表示了包含2个JSONObject的JSONArray</p><p>可以看到一个很明显的区别，一个用的是 { }  ，一个最外面用的是 [ ]</p><h2 id="二、如何从字符串String获得JSONObject对象和JSONArray对象"><a href="#二、如何从字符串String获得JSONObject对象和JSONArray对象" class="headerlink" title="二、如何从字符串String获得JSONObject对象和JSONArray对象"></a>二、如何从字符串String获得JSONObject对象和JSONArray对象</h2><p>JSONObject  jsonObject  &#x3D; new JSONObject (String str);</p><p>JSONArray jsonArray &#x3D; new JSONArray(String str) ;</p><h2 id="三、如何从JSONArray中获得JSONObject对象"><a href="#三、如何从JSONArray中获得JSONObject对象" class="headerlink" title="三、如何从JSONArray中获得JSONObject对象"></a>三、如何从JSONArray中获得JSONObject对象</h2><p>大家可以把JSONArray当成一般的数组来对待，只是获取的数据内数据的方法不一样</p><p>JSONObject   jsonObject &#x3D; (JSONObject)jsonArray.get(i);<br>JSONObject   jsonObject  &#x3D;  jsonArray.getJSONObject(i);  </p><p>两者都可。第一种注意转换</p><h2 id="四、获取JSON内的数据"><a href="#四、获取JSON内的数据" class="headerlink" title="四、获取JSON内的数据"></a>四、获取JSON内的数据</h2><p>int jid &#x3D; jsonObject.getInt ( “id” ) ;&#x2F;&#x2F;这里的jid得到的数据就是123.</p><p>String  jcourse&#x3D;jsonObject.getString( “ courseID”) ;&#x2F;&#x2F;这里的jcourse得到的数据就是huangt-test</p><p>Strirng jcourse &#x3D; jsonObject.get(“courseID”).toString();</p><h2 id="五、一般为键值对"><a href="#五、一般为键值对" class="headerlink" title="五、一般为键值对"></a>五、一般为键值对</h2><p>eg:{  name:”xm”, value:”张三”}</p><p>  String jname &#x3D; null;</p><p>  if(jsonObject.get(“name”).equals(“xm”)){</p><p>  jname&#x3D;jsonObject.get(“value”).toString();</p><p>}</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> JSON </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> JSON </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>MySQL</title>
       <link href="/2023/03/23/18.%E7%B4%A2%E5%BC%95/"/>
       <url>/2023/03/23/18.%E7%B4%A2%E5%BC%95/</url>
