@@ -1,0 +1,494 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>CodeOptimization | obscureline</title><meta name="keywords" content="CodeOptimization"><meta name="author" content="obscureline"><meta name="copyright" content="obscureline"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f7f9fe"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="CodeOptimization"><meta name="application-name" content="CodeOptimization"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#f7f9fe"><meta property="og:type" content="article"><meta property="og:title" content="CodeOptimization"><meta property="og:url" content="http://example.com/2024/02/20/40.%E4%BB%A3%E7%A0%81%E4%BC%98%E5%8C%96/index.html"><meta property="og:site_name" content="obscureline"><meta property="og:description" content="前言代码优化最重要的作用应该是避免未知的错误，因此在写代码的时候，从源头开始注意各种细节，权衡并使用最优的选择，将会很大程度上避免出现未知的错误，从长远看也极大的降低了工作量。所以说，代码优化的目标是减小代码体积、提高代码运行效率。优化是无止境的，本文也只是给出了一些常见的优化建议。  尽量指定类、"><meta property="og:locale" content="zh-CN"><meta property="og:image" content="https://pic.imgdb.cn/item/65c898df9f345e8d03bf9269.jpg"><meta property="article:author" content="obscureline"><meta property="article:tag" content="java"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://pic.imgdb.cn/item/65c898df9f345e8d03bf9269.jpg"><meta name="description" content="前言代码优化最重要的作用应该是避免未知的错误，因此在写代码的时候，从源头开始注意各种细节，权衡并使用最优的选择，将会很大程度上避免出现未知的错误，从长远看也极大的降低了工作量。所以说，代码优化的目标是减小代码体积、提高代码运行效率。优化是无止境的，本文也只是给出了一些常见的优化建议。  尽量指定类、"><link rel="shortcut icon" href="https://pic.imgdb.cn/item/64d5a8421ddac507ccb630dd.webp"><link rel="canonical" href="http://example.com/2024/02/20/40.%E4%BB%A3%E7%A0%81%E4%BC%98%E5%8C%96/"><link rel="preconnect" href="//cdn.cbd.int"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/@fancyapps/ui@5.0.28/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/swiper/swiper.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  linkPageTop: undefined,
+  peoplecanvas: {"enable":true,"img":"https://upload-bbs.miyoushe.com/upload/2023/09/03/125766904/ee23df8517f3c3e3efc4145658269c06_5714860933110284659.png"},
+  postHeadAiDescription: {"enable":true,"gptName":"AnZhiYu","mode":"local","switchBtn":false,"btnLink":"https://afdian.net/item/886a79d4db6711eda42a52540025c377","randomNum":3,"basicWordCount":1000,"key":"xxxx","Referer":"https://xx.xx/"},
+  diytitle: {"enable":true,"leaveTitle":"欢迎回来","backTitle":"欢迎回来"},
+  LA51: undefined,
+  greetingBox: undefined,
+  twikooEnvId: '',
+  commentBarrageConfig:undefined,
+  root: '/',
+  preloader: {"source":3},
+  friends_vue_info: undefined,
+  navMusic: true,
+  mainTone: undefined,
+  authorStatus: {"skills":["🤖️ 数码科技爱好者","🔍 分享与热心帮助","🏠 智能家居小能手","🔨 设计开发一条龙","🤝 专修交互与设计","🏃 脚踏实地行动派","🧱 团队小组发动机","💢 壮汉人狠话不多"]},
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简","rightMenuMsgToTraditionalChinese":"转为繁体","rightMenuMsgToSimplifiedChinese":"转为简体"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":330},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    simplehomepage: true,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"copy":true,"copyrightEbable":false,"limitCount":50,"languages":{"author":"作者: obscureline","link":"链接: ","source":"来源: obscureline","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。","copySuccess":"复制成功，复制和转载请标注本文地址"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.min.js',
+      css: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  shortcutKey: undefined,
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  configTitle: 'obscureline',
+  title: 'CodeOptimization',
+  postAI: '',
+  pageFillDescription: '前言代码优化最重要的作用应该是避免未知的错误因此在写代码的时候从源头开始注意各种细节权衡并使用最优的选择将会很大程度上避免出现未知的错误从长远看也极大的降低了工作量所以说代码优化的目标是减小代码体积提高代码运行效率优化是无止境的本文也只是给出了一些常见的优化建议尽量指定类方法的修饰符带有修饰符的类是不可派生的在核心中有许多应用的例子例如整个类都是的为类指定修饰符可以让类不可以被继承为方法指定修饰符可以让方法不可以被重写如果指定了一个类为则该类所有的方法都是的编译器会寻找机会内联所有的方法内联对于提升运行效率作用重大具体可以查阅运行期优化相关资料此举能够使性能平均提高尽量重用对象特别是对象的使用出现字符串连接时应该使用代替由于虚拟机不仅要花时间生成对象以后可能还需要花时间对这些对象进行垃圾回收和处理因此生成过多的对象将会给程序的性能带来很大的影响尽可能使用局部变量调用方法时传递的参数以及在调用中创建的临时变量都保存在栈中速度较快其他变量如静态变量实例变量等都在堆中创建速度较慢另外栈中创建的变量随着方法的运行结束这些内容就没了不需要额外的垃圾回收及时关闭流编程过程中进行数据库连接流操作时务必小心在使用完毕后及时关闭以释放资源因此对这些大对象的操作会造成系统大的开销稍有不慎将会导致严重的后果性能不好会重复调用建议替换为如下如上写法在很大的时候就减少了很多的消耗尽量采用懒加载的策略即在需要的时候才创建这个原则其实就是节约具体样例如下不好的示范建议替换为如下慎用异常异常对性能不利抛出异常首先要创建一个新的对象接口的构造函数调用名为的本地同步方法方法检查堆栈收集调用跟踪信息只要有异常被抛出虚拟机就必须调整调用堆栈因为在处理过程中创建了一个新的对象异常只要用于错误处理不应该用来控制程序流程当复制大量数据时使用命令这个肯定大家没有疑问的性能优化的实现而已乘法和除法使用移位操作用移位操作可以极大地提高性能因为在计算机底层对位的操作是最方便最快的但是移位操作虽然快可能会使代码不太好理解因此更好加上相应的注释不好的示范建议修改实现循环内不要不断创建引用不好的示范上面这种做法会导致内存中有份对象引用存在很大的话就耗费内存了建议为如下实现如上实现内存中只有一份对象引用每次的时候对象引用指向不同的罢了但是内存中只有一份这样就大大节省了内存空间了基于效率和类型检查的考虑应该尽可能使用无法确定数组大小时才使用尽量使用除非线程安全需要否则不推荐使用后三者由于使用同步机制而导致了性能开销不要将数组声明为因为这毫无意义这样只是定义了引用为数组的内容还是可以随意改变的将数组声明为更是一个安全漏洞这意味着这个数组可以被外部类所改变尽量在合适的场合使用单例使用单例可以减轻加载的负担缩短加载的时间提高加载的效率但并不是所有地方都适用于单例简单来说单例主要适用于以下三个方面控制资源的使用通过线程同步来控制资源的并发访问控制实例的产生以达到节约资源的目的控制数据的共享在不建立直接关联的条件下让多个不相关的进程或线程之间实现通信尽量避免随意使用静态变量因为当某个对象被定义为的变量所引用那么通常是不会回收这个对象所占有的堆内存的此时静态变量的生命周期与类相同如果类不被卸载那么引用指向的对象会常驻内存直到程序终止及时清除不再需要的会话为了清楚不再活动的会话许多应用服务器都有默认的会话超时时间一般为分钟当应用服务器需要保存更多的会话时如果内存不足那么操作系统会把部分数据转移到磁盘应用服务器也可能根据最近最频繁使用算法把部分不活跃的会话转储到磁盘甚至可能抛出内存不足的异常如果会话要被转储到磁盘那么必须要先被序列化在大规模集群中对对象进行序列号的代价是很昂贵的因此当会话不再需要时应当及时调用的方式清楚会话实现接口的集合比如应当使用最普通的循环而不是循环来遍历这是推荐给用户的对于接口的解释是实现接口用来表明其支持快速随机访问此接口的主要目的是允许一般的算法更改其行为从而将其应用到随机或连续访问列表时能提供良好的性能实际经验表明实现接口的类实例假如是随机访问的使用普通循环效率将高于使用循环反过来如果是顺序访问的则使用会效率更高样板代码可以使用类似如下的代码作判断使用同步代码块替代同步方法尽量使用同步代码块避免对那些不需要进行同步的代码也进行了同步影响了代码执行效率将常量声明为并以大写命名这样在编译期间就可以把这些内容放入常量池中避免运行期间计算生成常量的值另外将常量的名字以大写命令也可以方便区分出常量与变量不要创建一些不使用的对象不要导入一些不使用的类这毫无意义如果代码中出现那么请删除这些无用的内容虽说没啥影响但是有些时候编译期会报错譬如没用到的类被删掉了程序运行过程中避免使用反射不建议在程序运行过程中使用除非万不得已尤其是频繁使用反射机制特别是的方法如果确实有必要一种建议性的做法是将那些需要通过反射加载的类在项目启动的时候通过反射实例化出一个对象并放入内存用户只关心和对端交互的时候获取最快的响应速度并不关心对端的项目启动花多久时间使用数据库连接池和线程池这两个池都是用于重用对象的前者可以避免频繁的打开和关闭连接后者可以避免频繁的创建和销毁线程使用带缓冲的输入输出流进行操作带缓冲的输入输出流即这可以极大地提升效率顺序插入和随机访问比较多的场景使用元素删除和中间插入比较多的场景使用不要让方法中有太多的形参方法即对外提供的方法如果给这些方法太多形参的话主要坏处是违反了面向对象的编程思想讲求一切都是对象太多的形参和面向对象的编程思想并不契合参数太多势必导致方法调用的出错概率增加字符串变量和字符串常量的时候将字符串常量写在前面这样可以避免空指针建议使用而不是的方式因为有可能会误写成而在中是会出问题的而会在编译时报错但是尽管的和在语义上没有任何区别从阅读习惯上讲建议使用前者会更好些不要对数组使用方法本意是想打印出数组内容却打出来的是对象信息甚至有可能因为数组引用为空而导致空指针异常对于集合是可以打印出集合里面的内容的因为集合的父类重写了的方法不要对超出范围的基本数据类型做向下强制转型这很明确譬如转是会存在潜在风险的公用的集合类中不使用的数据一定要及时掉如果一个集合类是公用的也就是说不是方法里面的属性那么这个集合里面的元素是不会自动释放的因为始终有引用指向它们所有如果公用集合里面的某些数据不使用而不去掉它们那么将会造成这个公用集合不断增大使得系统有内存泄漏的隐患把一个基本数据类型转为字符串基本数据类型是最快的方式数据次之数据最慢因为方法底层调用了方法但是会在调用前做空判断是直接调用了底层使用实现先用方法拼接再用方法获取字符串使用最有效率的方式去遍历遍历的方式有很多通常场景下我们需要的是遍历中的和那么推荐使用的效率最高的方式是如果只是想遍历一下这个的值则会比较合适一些对资源的建议分开操作虽然有些麻烦却能避免资源泄漏这其实和机制相关各自分开各自的就会互不影响防止写在一个中因为一个异常了后面的释放不了对于在线程池场景使用前或者使用后一定要先因为线程池技术做的是一个线程重用这意味着代码运行过程中一条线程使用完毕并不会被销毁而是等待下一次的使用而类中持有的引用线程不销毁意味着上条线程的中的数据依然存在那么在下一条线程重用这个的时候很可能到的是上条线程的数据而不是自己想要的内容这个问题非常隐晦一旦出现这个原因导致的错误没有相关经验或者没有扎实的基础非常难发现这个问题因此在写代码的时候就要注意这一点这将给你后续减少很多的工作量切记以常量定义的方式替代魔鬼数字魔鬼数字的存在极大的降低代码可读性字符串常量是否使用常量定义可以视情况而定或者初始赋值时使用大写的而不是小写的因为小写及易与数字混合这点非常细节需要注意所有重写的方法必须保留注解这么做可以清楚地知道这个方法由父类继承而来同时可以保证重写成功此外在抽象类中对方法签名进行修改实现类会马上报出编译错误推荐使用中新引入地工具类来进行对象地比较直接有空指针异常地风险循环体内不要使用进行字符串拼接而直接使用不断因为每次虚拟机碰到这个操作符对字符串进行拼接地时候会出一个然后调用方法最后调用方法转换字符串赋值给对象所以循环多少次就会出多少个来这对于内存是一种浪费不捕获类库中定义地继承自的运行时异常类异常处理效率低的运行时异常中绝大多数完全可以由程序员来规避比如可以通过判断除数是否为空来规避可以通过判断对象是否为空来规避可以通过判断数组字符串长度来规避可以通过关键字来规避可以使用迭代器来规避静态类单例类工厂类将它们的构造函数置为这是因为静态类单例类工厂类这种类本来我们就不需要外部将它们出来将构造函数置为之后保证了这些类不会产生实例对象总结代码优化就像是鲨鱼吃虾米可能吃一只两只和没吃没有什么区别但是吃一万只十万只有可能就吃饱了所以可能一个小的优化对效率并不会带来多大的提升但是积少成多这世间万物哪一件事情不是积少成多逐渐成熟一口吃不了大胖子所有的成功都是基于一点一滴的努力',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2024-02-21 03:07:47',
+  postMainColor: '',
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.1.1"></head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" alt="加载头像" src="https://pic.imgdb.cn/item/65c898df9f345e8d03bf9269.jpg"/><div class="loading-image-dot"></div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.getElementById('loading-box').classList.add("loaded");
+  },
+  initLoading: () => {
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+setTimeout(function(){preloader.endLoading();},10000)
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.10/progress_bar/progress_bar.css"/><script async="async" src="https://cdn.cbd.int/pace-js@1.2.4/pace.min.js" data-pace-options="{ &quot;restartOnRequestAfter&quot;:false,&quot;eventLag&quot;:false}"></script><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><div class="back-home-button"><i class="anzhiyufont anzhiyu-icon-grip-vertical"></i><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://blog.anheyu.com/" title="博客"><img class="back-menu-item-icon" src="/img/favicon.ico" alt="博客"/><span class="back-menu-item-text">博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://image.anheyu.com/" title="安知鱼图床"><img class="back-menu-item-icon" src="https://image.anheyu.com/favicon.ico" alt="安知鱼图床"/><span class="back-menu-item-text">安知鱼图床</span></a></div></div></div></div><a id="site-name" href="/" accesskey="h"><div class="title">obscureline</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 友链</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/link/"><i class="anzhiyufont anzhiyu-icon-link faa-tada" style="font-size: 0.9em;"></i><span> 友人帐</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/comments/"><i class="anzhiyufont anzhiyu-icon-envelope faa-tada" style="font-size: 0.9em;"></i><span> 留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 我的</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/album/"><i class="anzhiyufont anzhiyu-icon-images faa-tada" style="font-size: 0.9em;"></i><span> 相册集</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/essay/"><i class="anzhiyufont anzhiyu-icon-lightbulb faa-tada" style="font-size: 0.9em;"></i><span> 闲言碎语</span></a></li></ul></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/music/"><span> 音乐馆</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/about/"><span> 关于</span></a></div></div></div><div id="nav-right"><div class="nav-button only-home" id="travellings_button" title="随机前往一个开往项目网站"><a class="site-page" onclick="anzhiyu.totraveling()" title="随机前往一个开往项目网站" href="javascript:void(0);" rel="external nofollow" data-pjax-state="external"><i class="anzhiyufont anzhiyu-icon-train"></i></a></div><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" target="_blank"><img class="post-qr-code-img" alt="微信" src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" target="_blank"><img class="post-qr-code-img" alt="支付宝" src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"><div class="console-card" id="card-newest-comments"><div class="card-content"><div class="author-content-item-tips">互动</div><span class="author-content-item-title"> 最新评论</span></div><div class="aside-list"><span>正在加载中...</span></div></div></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/Activiti/" style="font-size: 1.05rem;">Activiti<sup>1</sup></a><a href="/tags/CodeOptimization/" style="font-size: 1.05rem;">CodeOptimization<sup>2</sup></a><a href="/tags/Docker/" style="font-size: 1.05rem;">Docker<sup>1</sup></a><a href="/tags/Elasticsearch/" style="font-size: 1.05rem;">Elasticsearch<sup>1</sup></a><a href="/tags/HelloWorld/" style="font-size: 1.05rem;">HelloWorld<sup>0</sup></a><a href="/tags/IO/" style="font-size: 1.05rem;">IO<sup>1</sup></a><a href="/tags/JDK/" style="font-size: 1.05rem;">JDK<sup>2</sup></a><a href="/tags/JSON/" style="font-size: 1.05rem;">JSON<sup>2</sup></a><a href="/tags/JdbcTemplate/" style="font-size: 1.05rem;">JdbcTemplate<sup>1</sup></a><a href="/tags/Kafka/" style="font-size: 1.05rem;">Kafka<sup>1</sup></a><a href="/tags/Linux/" style="font-size: 1.05rem;">Linux<sup>1</sup></a><a href="/tags/MinIO/" style="font-size: 1.05rem;">MinIO<sup>1</sup></a><a href="/tags/MongoDB/" style="font-size: 1.05rem;">MongoDB<sup>1</sup></a><a href="/tags/MyBatis/" style="font-size: 1.05rem;">MyBatis<sup>1</sup></a><a href="/tags/MyBatisPlus/" style="font-size: 1.05rem;">MyBatisPlus<sup>1</sup></a><a href="/tags/Preamble/" style="font-size: 1.05rem;">Preamble<sup>1</sup></a><a href="/tags/RabbitMQ/" style="font-size: 1.05rem;">RabbitMQ<sup>1</sup></a><a href="/tags/Redis/" style="font-size: 1.05rem;">Redis<sup>1</sup></a><a href="/tags/SQL/" style="font-size: 1.05rem;">SQL<sup>3</sup></a><a href="/tags/Spring/" style="font-size: 1.05rem;">Spring<sup>1</sup></a><a href="/tags/SpringCache/" style="font-size: 1.05rem;">SpringCache<sup>1</sup></a><a href="/tags/SpringCloud/" style="font-size: 1.05rem;">SpringCloud<sup>1</sup></a><a href="/tags/SpringCloudAlibaba/" style="font-size: 1.05rem;">SpringCloudAlibaba<sup>1</sup></a><a href="/tags/SpringMVC/" style="font-size: 1.05rem;">SpringMVC<sup>1</sup></a><a href="/tags/SpringSecurity/" style="font-size: 1.05rem;">SpringSecurity<sup>1</sup></a><a href="/tags/UI/" style="font-size: 1.05rem;">UI<sup>1</sup></a><a href="/tags/VUE/" style="font-size: 1.05rem;">VUE<sup>1</sup></a><a href="/tags/Web/" style="font-size: 1.05rem;">Web<sup>1</sup></a><a href="/tags/%E4%BA%8B%E5%8A%A1/" style="font-size: 1.05rem;">事务<sup>1</sup></a><a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 1.05rem;">多线程<sup>1</sup></a><a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 1.05rem;">数据结构<sup>1</sup></a><a href="/tags/%E7%83%AD%E9%97%A8%E9%A1%B9%E7%9B%AE1/" style="font-size: 1.05rem;">热门项目1<sup>1</sup></a><a href="/tags/%E7%83%AD%E9%97%A8%E9%A1%B9%E7%9B%AE2/" style="font-size: 1.05rem;">热门项目2<sup>1</sup></a><a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 1.05rem;">算法<sup>1</sup></a><a href="/tags/%E7%B4%A2%E5%BC%95/" style="font-size: 1.05rem;">索引<sup>1</sup></a><a href="/tags/%E9%9B%86%E5%90%88%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/" style="font-size: 1.05rem;">集合底层原理<sup>1</sup></a></div></div><hr/></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/02/"><span class="card-archive-list-date">二月 2024</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">39</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/10/"><span class="card-archive-list-date">十月 2022</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div><div class="console-btn-item" id="consoleMusic" onclick="anzhiyu.musicToggle()" title="音乐开关"><a class="music-switch"><i class="anzhiyufont anzhiyu-icon-music"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="post-meta-categories"><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-inbox post-meta-icon"></i><a class="post-meta-categories" href="/categories/CodeOptimization/" itemprop="url">CodeOptimization</a></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/CodeOptimization/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>CodeOptimization</span></a></span></div></div><h1 class="post-title" itemprop="name headline">CodeOptimization</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2024-02-20T13:20:08.108Z" title="发表于 2024-02-20 21:20:08">2024-02-20</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2024-02-20T19:07:47.994Z" title="更新于 2024-02-21 03:07:47">2024-02-21</time></span></div><div class="meta-secondline"><span class="post-meta-separator"></span><span class="post-meta-wordcount"><i class="anzhiyufont anzhiyu-icon-file-word post-meta-icon" title="文章字数"></i><span class="post-meta-label" title="文章字数">字数总计:</span><span class="word-count" title="文章字数">4.1k</span><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-clock post-meta-icon" title="阅读时长"></i><span class="post-meta-label" title="阅读时长">阅读时长:</span><span>12分钟</span></span><span class="post-meta-separator"></span><span class="post-meta-pv-cv" id="" data-flag-title="CodeOptimization"><i class="anzhiyufont anzhiyu-icon-fw-eye post-meta-icon"></i><span class="post-meta-label" title="阅读量">阅读量:</span><span id="busuanzi_value_page_pv"><i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-spin"></i></span></span><span class="post-meta-separator">       </span><span class="post-meta-position" title="作者IP属地为武汉"><i class="anzhiyufont anzhiyu-icon-location-dot"></i>武汉</span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section><div id="post-top-cover"><img class="nolazyload" id="post-top-bg" src=""></div></header><main id="blog-container"><div class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container" itemscope itemtype="http://example.com/2024/02/20/40.%E4%BB%A3%E7%A0%81%E4%BC%98%E5%8C%96/"><header><a class="post-meta-categories" href="/categories/CodeOptimization/" itemprop="url">CodeOptimization</a><a href="/tags/CodeOptimization/" tabindex="-1" itemprop="url">CodeOptimization</a><h1 id="CrawlerTitle" itemprop="name headline">CodeOptimization</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">obscureline</span><time itemprop="dateCreated datePublished" datetime="2024-02-20T13:20:08.108Z" title="发表于 2024-02-20 21:20:08">2024-02-20</time><time itemprop="dateCreated datePublished" datetime="2024-02-20T19:07:47.994Z" title="更新于 2024-02-21 03:07:47">2024-02-21</time></header><p>前言<br>代码优化最重要的作用应该是避免未知的错误，因此在写代码的时候，从源头开始注意各种细节，权衡并使用最优的选择，将会很大程度上避免出现未知的错误，从长远看也极大的降低了工作量。所以说，代码优化的目标是减小代码体积、提高代码运行效率。优化是无止境的，本文也只是给出了一些常见的优化建议。</p>
+<ol>
+<li><p>尽量指定类、方法的final修饰符<br>带有final修饰符的类是不可派生的。在Java核心API中，有许多应用final的例子，例如java.lang.String，整个类都是final的。为类指定final修饰符可以让类不可以被继承，为方法指定final修饰符可以让方法不可以被重写。如果指定了一个类为final，则该类所有的方法都是final的。Java编译器会寻找机会内联所有的final方法，内联对于提升Java运行效率作用重大，具体可以查阅Java运行期优化相关资料，此举能够使性能平均提高50%。</p>
+</li>
+<li><p>尽量重用对象<br>特别是String对象的使用，出现字符串连接时应该使用StringBuilder&#x2F;StringBuffer代替。由于Java虚拟机不仅要花时间生成对象，以后可能还需要花时间对这些对象进行垃圾回收和处理，因此生成过多的对象将会给程序的性能带来很大的影响。</p>
+</li>
+<li><p>尽可能使用局部变量<br>调用方法时传递的参数以及在调用中创建的临时变量都保存在栈中，速度较快，其他变量，如静态变量、实例变量等，都在堆中创建，速度较慢。另外，栈中创建的变量，随着方法的运行结束，这些内容就没了，不需要额外的垃圾回收。</p>
+</li>
+<li><p>及时关闭流<br>Java编程过程中，进行数据库连接、IO流操作时务必小心，在使用完毕后，及时关闭以释放资源。因此对这些大对象的操作会造成系统大的开销，稍有不慎，将会导致严重的后果。</p>
+</li>
+<li><p>&#x2F;&#x2F;性能不好，list.size()会重复调用<br>for(int i &#x3D; 0; i &lt; list.size(); i++) {<br> …<br>}<br>&#x2F;&#x2F;建议替换为如下：<br>for(int i &#x3D; 0, length &#x3D; list.size(); i &lt; length; i++) {<br> …<br>}<br>&#x2F;&#x2F;如上写法在list.size()很大的时候，就减少了很多的消耗。</p>
+</li>
+<li><p>尽量采用懒加载的策略，即在需要的时候才创建<br>这个原则其实就是节约，具体样例如下。</p>
+</li>
+</ol>
+<p>&#x2F;&#x2F;不好的示范<br>String str &#x3D; “aaa”;<br>if(i &#x3D;&#x3D; 1) {<br>    list.add(str);<br>}<br>&#x2F;&#x2F;建议替换为如下：<br>if(i &#x3D;&#x3D; 1) {<br>    String str &#x3D; “aaa”;<br>    list.add(str);<br>}</p>
+<ol start="7">
+<li><p>慎用异常<br>异常对性能不利，抛出异常首先要创建一个新的对象，Throwable接口的构造函数调用名为filllnStackTrace()的本地同步方法，filllnStackTrace()方法检查堆栈，收集调用跟踪信息。只要有异常被抛出，Java虚拟机就必须调整调用堆栈，因为在处理过程中创建了一个新的对象。异常只要用于错误处理，不应该用来控制程序流程。</p>
+</li>
+<li><p>当复制大量数据时，使用System.arraycopy()命令<br>这个肯定大家没有疑问的，性能优化的实现而已。</p>
+</li>
+<li><p>乘法和除法使用移位操作。<br>用移位操作可以极大地提高性能，因为在计算机底层，对位的操作是最方便、最快的，但是移位操作虽然快， 可能会使代码不太好理解，因此更好加上相应的注释。</p>
+</li>
+</ol>
+<p>&#x2F;&#x2F;不好的示范<br>for(val &#x3D; 0; val &lt; 100000; val +&#x3D; 5) {<br>    a &#x3D; val * 8;<br>    b &#x3D; val &#x2F; 2;<br>}<br>&#x2F;&#x2F;建议修改实现：<br>for(val &#x3D; 0; val &lt; 100000; val +&#x3D; 5) {<br>    a &#x3D; val &lt;&lt; 3;<br>    b &#x3D; val &gt;&gt; 1;<br>}</p>
+<ol start="10">
+<li><p>循环内不要不断创建引用<br>&#x2F;&#x2F;不好的示范<br>for(int i &#x3D; 1; i &lt;&#x3D; count; i++) {<br>Object obj &#x3D; new Object();<br>}<br>&#x2F;&#x2F;上面这种做法会导致内存中有count份Object对象引用存在，<br>&#x2F;&#x2F;count很大的话，就耗费内存了，建议为如下实现。<br>Object obj &#x3D; null;<br>for(int i &#x3D; 0; i &lt;&#x3D; count; i++) {<br>obj &#x3D; new Object();<br>}<br>&#x2F;&#x2F;如上实现内存中只有一份Object对象引用，<br>&#x2F;&#x2F;每次new Object()的时候，Object对象引用指向不同的Object罢了，<br>&#x2F;&#x2F;但是内存中只有一份，这样就大大节省了内存空间了。</p>
+</li>
+<li><p>基于效率和类型检查的考虑，应该尽可能使用array，无法确定数组大小时才使用ArrayList。</p>
+</li>
+<li><p>尽量使用HashMap、ArrayList、StringBuilder，除非线程安全需要，否则不推荐使用Hashtable、Vector、StringBuffer，后三者由于使用同步机制而导致了性能开销。</p>
+</li>
+<li><p>不要将数组声明为public static final。<br>因为这毫无意义，这样只是定义了引用为static final，数组的内容还是可以随意改变的，将数组声明为public更是一个安全漏洞，这意味着这个数组可以被外部类所改变。</p>
+</li>
+<li><p>尽量在合适的场合使用单例。<br>使用单例可以减轻加载的负担、缩短加载的时间、提高加载的效率，但并不是所有地方都适用于单例，简单来说，单例主要适用于以下三个方面：</p>
+</li>
+</ol>
+<p>控制资源的使用，通过线程同步来控制资源的并发访问；<br>控制实例的产生，以达到节约资源的目的；<br>控制数据的共享，在不建立直接关联的条件下，让多个不相关的进程或线程之间实现通信；<br>15. 尽量避免随意使用静态变量<br>因为当某个对象被定义为static的变量所引用，那么gc通常是不会回收这个对象所占有的堆内存的。</p>
+<p>public class A {<br>    private static B b &#x3D; new B();<br>}<br>&#x2F;&#x2F;此时静态变量b的生命周期与A类相同，<br>&#x2F;&#x2F;如果A类不被卸载，那么引用B指向的B对象会常驻内存，直到程序终止。</p>
+<ol start="16">
+<li><p>及时清除不再需要的会话。<br>为了清楚不再活动的会话，许多应用服务器都有默认的会话超时时间，一般为30分钟。当应用服务器需要保存更多的会话时，如果内存不足，那么操作系统会把部分数据转移到磁盘，应用服务器也可能根据MRU(最近最频繁使用)算法把部分不活跃的会话转储到磁盘，甚至可能抛出内存不足的异常。如果会话要被转储到磁盘，那么必须要先被序列化，在大规模集群中，对对象进行序列号的代价是很昂贵的。因此，当会话不再需要时，应当及时调用HttpSession的invalidate()方式清楚会话。</p>
+</li>
+<li><p>实现RandomAccess接口的集合(比如ArrayList)应当使用最普通的for循环而不是foreach循环来遍历。<br>这是JDK推荐给用户的，JDK API对于RandomAccess接口的解释是实现RandomAccess接口用来表明其支持快速随机访问，此接口的主要目的是允许一般的算法更改其行为，从而将其应用到随机或连续访问列表时能提供良好的性能。实际经验表明，实现RandomAccess接口的类实例，假如是随机访问的，使用普通for循环效率将高于使用foreach循环，反过来，如果是顺序访问的，则使用Iterator会效率更高。</p>
+</li>
+</ol>
+<p>&#x2F;&#x2F;样板代码：可以使用类似如下的代码作判断<br>if(list instanceof RandomAccess) {<br>    for(int i &#x3D; 0; i &lt; list.size(); i++) {}<br>} else {<br>    Iterator&lt;?&gt; iterator &#x3D; list.iterable();<br>    while(iterator.hasNext()) {iterator.next()}<br>}</p>
+<ol start="18">
+<li><p>使用同步代码块替代同步方法<br>尽量使用同步代码块，避免对那些不需要进行同步的代码也进行了同步，影响了代码执行效率。</p>
+</li>
+<li><p>将常量声明为static final，并以大写命名。<br>这样在编译期间就可以把这些内容放入常量池中，避免运行期间计算生成常量的值。另外，将常量的名字以大写命令也可以方便区分出常量与变量。</p>
+</li>
+<li><p>不要创建一些不使用的对象，不要导入一些不使用的类。<br>这毫无意义，如果代码中出现”The value of the lical variable i is not used”、“The import java.util is never used”，那么请删除这些无用的内容，虽说没啥影响，但是有些时候编译期会报错，譬如没import用到的类被删掉了。</p>
+</li>
+<li><p>程序运行过程中避免使用反射<br>不建议在程序运行过程中使用，除非万不得已，尤其是频繁使用反射机制，特别是Method的invoke方法，如果确实有必要，一种建议性的做法是将那些需要通过反射加载的类在项目启动的时候通过反射实例化出一个对象并放入内存，用户只关心和对端交互的时候获取最快的响应速度，并不关心对端的项目启动花多久时间。</p>
+</li>
+<li><p>使用数据库连接池和线程池<br>这两个池都是用于重用对象的，前者可以避免频繁的打开和关闭连接，后者可以避免频繁的创建和销毁线程。</p>
+</li>
+<li><p>使用带缓冲的输入输出流进行IO操作<br>带缓冲的输入输出流，即BufferedReader、BufferedWriter、BufferedInputStream、BufferedOutputStream，这可以极大地提升IO效率。</p>
+</li>
+<li><p>顺序插入和随机访问比较多的场景使用ArrayList，元素删除和中间插入比较多的场景使用LinkedList。</p>
+</li>
+<li><p>不要让public方法中有太多的形参。<br>public方法即对外提供的方法，如果给这些方法太多形参的话主要坏处是违反了面向对象的编程思想，Java讲求一切都是对象，太多的形参和面向对象的编程思想并不契合，参数太多势必导致方法调用的出错概率增加。</p>
+</li>
+<li><p>字符串变量和字符串常量equals的时候将字符串常量写在前面， 这样可以避免空指针。</p>
+</li>
+<li><p>建议使用if(i &#x3D;&#x3D; 1)而不是if(1 &#x3D;&#x3D; i)的方式<br>因为有可能 &#x3D;&#x3D; 会误写成 &#x3D;，而在 C&#x2F;C++ 中 if (i &#x3D; 1) 是会出问题的，而 Java 会在编译时报错 “Type mismatch: cannot convert from int to boolean”，但是，尽管Java的 if (i &#x3D;&#x3D; 1) 和 if (1 &#x3D;&#x3D; i) 在语义上没有任何区别，从阅读习惯上讲，建议使用前者会更好些。</p>
+</li>
+<li><p>不要对数组使用toString()方法<br>本意是想打印出数组内容，却打出来的是对象信息，甚至有可能因为数组引用为空而导致空指针异常。对于集合toString()是可以打印出集合里面的内容的，因为集合的父类AbstractCollections重写了Object的toString()方法。</p>
+</li>
+<li><p>不要对超出范围的基本数据类型做向下强制转型<br>这很明确，譬如long转int是会存在潜在风险的。</p>
+</li>
+<li><p>公用的集合类中不使用的数据一定要及时remove掉<br>如果一个集合类是公用的(也就是说不是方法里面的属性)，那么这个集合里面的元素是不会自动释放的，因为始终有引用指向它们。所有，如果公用集合里面的某些数据不使用而不去remove掉它们，那么将会造成这个公用集合不断增大，使得系统有内存泄漏的隐患。</p>
+</li>
+<li><p>把一个基本数据类型转为字符串，基本数据类型.toString()是最快的方式、String.valueOf(数据)次之、数据+””最慢。<br>因为String.valueOf()方法底层调用了Integer.toString()方法，但是会在调用前做空判断；Integer.toString()是直接调用了；i+””底层使用StringBuilder实现，先用append方法拼接，再用toString()方法获取字符串。</p>
+</li>
+<li><p>使用最有效率的方式去遍历Map<br>遍历Map的方式有很多，通常场景下我们需要的是遍历Map中的Key和Value，那么推荐使用的、效率最高的方式是entrySet()，如果只是想遍历一下这个Map的key值则keySet()会比较合适一些。</p>
+</li>
+<li><p>对资源的close()建议分开操作<br>虽然有些麻烦，却能避免资源泄漏，这其实和try-catch机制相关，各自分开close各自的try-catch就会互不影响，防止写在一个try-catch中因为一个异常了后面的释放不了。</p>
+</li>
+<li><p>对于ThreadLocal在线程池场景使用前或者使用后一定要先remove<br>因为线程池技术做的是一个线程重用，这意味着代码运行过程中一条线程使用完毕并不会被销毁而是等待下一次的使用，而Thread类中持有ThreadLocal.ThreadLocalMap的引用，线程不销毁意味着上条线程set的ThreadLocal.ThreadLocalMap中的数据依然存在，那么在下一条线程重用这个Thread的时候很可能get到的是上条线程set的数据而不是自己想要的内容。这个问题非常隐晦，一旦出现这个原因导致的错误，没有相关经验或者没有扎实的基础非常难发现这个问题，因此在写代码的时候就要注意这一点，这将给你后续减少很多的工作量。</p>
+</li>
+<li><p>切记以常量定义的方式替代魔鬼数字，魔鬼数字的存在极大的降低代码可读性，字符串常量是否使用常量定义可以视情况而定。</p>
+</li>
+<li><p>long或者Long初始赋值时使用大写的L而不是小写的l，因为小写l及易与数字1混合，这点非常细节，需要注意</p>
+</li>
+<li><p>所有重写的方法必须保留@Override注解<br>这么做可以清楚地知道这个方法由父类继承而来，同时可以保证重写成功，此外在抽象类中对方法签名进行修改，实现类会马上报出编译错误。</p>
+</li>
+<li><p>推荐使用JDK7中新引入地Objects工具类来进行对象地equals比较，直接a.equals(b)有空指针异常地风险。</p>
+</li>
+<li><p>循环体内不要使用”+”进行字符串拼接，而直接使用StringBuilder不断append<br>因为每次虚拟机碰到”+”这个操作符对字符串进行拼接地时候会new出一个StringBuilder，然后调用append方法，最后调用toString()方法转换字符串赋值给对象，所以循环多少次，就会new出多少个StringBuileder()来，这对于内存是一种浪费。</p>
+</li>
+<li><p>不捕获Java类库中定义地继承自RuntimeException的运行时异常类<br>异常处理效率低，RuntimeException的运行时异常中绝大多数完全可以由程序员来规避，比如ArithmeticException可以通过判断除数是否为空来规避，NullPointerException可以通过判断对象是否为空来规避，IndexOutOfBoundsException可以通过判断数组&#x2F;字符串长度来规避，ClassCastException可以通过instanceof关键字来规避，ConcurrentModificationException可以使用迭代器来规避</p>
+</li>
+<li><p>静态类、单例类、工厂类将它们的构造函数置为private<br>这是因为静态类、单例类、工厂类这种类本来我们就不需要外部将它们new出来，将构造函数置为private之后，保证了这些类不会产生实例对象。</p>
+</li>
+</ol>
+<p>总结：代码优化就像是鲨鱼吃虾米，可能吃一只两只和没吃没有什么区别，但是吃一万只十万只有可能就吃饱了。所以可能一个小的优化对效率并不会带来多大的提升，但是积少成多，这世间万物，哪一件事情不是积少成多，逐渐成熟，一口吃不了大胖子，所有的成功，都是基于一点一滴的努力。</p>
+</article><div class="post-copyright"><div class="copyright-cc-box"><i class="anzhiyufont anzhiyu-icon-copyright"></i></div><div class="post-copyright__author_box"><a class="post-copyright__author_img" href="/" title="头像"><img class="post-copyright__author_img_back" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://pic.imgdb.cn/item/65c898df9f345e8d03bf9269.jpg" title="头像" alt="头像"><img class="post-copyright__author_img_front" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://pic.imgdb.cn/item/65c898df9f345e8d03bf9269.jpg" title="头像" alt="头像"></a><div class="post-copyright__author_name">obscureline</div><div class="post-copyright__author_desc">Blog</div></div><div class="post-copyright__post__info"><a class="post-copyright__original" title="该文章为原创文章，注意版权协议" href="http://example.com/2024/02/20/40.%E4%BB%A3%E7%A0%81%E4%BC%98%E5%8C%96/">原创</a><a class="post-copyright-title"><span onclick="rm.copyPageUrl('http://example.com/2024/02/20/40.%E4%BB%A3%E7%A0%81%E4%BC%98%E5%8C%96/')">CodeOptimization</span></a></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div class="rewardLeftButton"><div class="post-reward" onclick="anzhiyu.addRewardMask()"><div class="reward-button button--animated" title="赞赏作者"><i class="anzhiyufont anzhiyu-icon-hand-heart-fill"></i>打赏作者</div><div class="reward-main"><div class="reward-all"><span class="reward-title">感谢你赐予我前进的力量</span><ul class="reward-group"><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul><a class="reward-main-btn" href="/about/#about-reward" target="_blank"><div class="reward-text">赞赏者名单</div><div class="reward-dec">因为你们的支持让我意识到写文章的价值🙏</div></a></div></div></div><div id="quit-box" onclick="anzhiyu.removeRewardMask()" style="display: none"></div></div><div class="shareRight"><div class="share-link mobile"><div class="share-qrcode"><div class="share-button" title="使用手机访问这篇文章"><i class="anzhiyufont anzhiyu-icon-qrcode"></i></div><div class="share-main"><div class="share-main-all"><div id="qrcode" title="http://example.com/2024/02/20/40.%E4%BB%A3%E7%A0%81%E4%BC%98%E5%8C%96/"></div><div class="reward-dec">使用手机访问这篇文章</div></div></div></div></div><div class="share-link weibo"><a class="share-button" target="_blank" href="https://service.weibo.com/share/share.php?title=CodeOptimization&amp;url=http://example.com/2024/02/20/40.%E4%BB%A3%E7%A0%81%E4%BC%98%E5%8C%96/&amp;pic=" rel="external nofollow noreferrer noopener"><i class="anzhiyufont anzhiyu-icon-weibo"></i></a></div><script>function copyCurrentPageUrl() {
+  var currentPageUrl = window.location.href;
+  var input = document.createElement("input");
+  input.setAttribute("value", currentPageUrl);
+  document.body.appendChild(input);
+  input.select();
+  input.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+  document.body.removeChild(input);
+}</script><div class="share-link copyurl"><div class="share-button" id="post-share-url" title="复制链接" onclick="copyCurrentPageUrl()"><i class="anzhiyufont anzhiyu-icon-link"></i></div></div></div></div></div><div class="post-copyright__notice"><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">obscureline</a>！</span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__box"><div class="post-meta__box__tag-list"><a class="post-meta__box__tags" href="/tags/CodeOptimization/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>CodeOptimization<span class="tagsPageCount">2</span></a></div></div></div><div class="post_share"><div class="social-share" data-image="https://pic.imgdb.cn/item/65c898df9f345e8d03bf9269.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"/><script src="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer="defer"></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-full"><a href="/2024/02/20/39.%E4%BB%A3%E7%A0%81%E4%BC%98%E5%8C%96/"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">CodeOptimization</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="anzhiyufont anzhiyu-icon-thumbs-up fa-fw" style="font-size: 1.5rem; margin-right: 4px"></i><span>喜欢这篇文章的人也看了</span></div><div class="relatedPosts-list"><div><a href="/2024/02/20/39.%E4%BB%A3%E7%A0%81%E4%BC%98%E5%8C%96/" title="CodeOptimization"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2024-02-20</div><div class="title">CodeOptimization</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info__sayhi" id="author-info__sayhi" onclick="anzhiyu.changeSayHelloText()"></div><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://pic.imgdb.cn/item/65c898df9f345e8d03bf9269.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-status"><img class="g-status" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/08/24/64e6ce9c507bb.png" alt="status"/></div></div><div class="author-info__description">Welcome To ObscureLine Home</div><div class="author-info__bottom-group"><a class="author-info__bottom-group-left" href="/"><h1 class="author-info__name">obscureline</h1><div class="author-info__desc">Blog</div></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="https://github.com/obscureline" target="_blank" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a><a class="social-icon faa-parent animated-hover" href="mailto:obscureline@126.com" target="_blank" title="Mail"><i class="anzhiyufont anzhiyu-icon-bilibili"></i></a></div></div></div></div><div class="card-widget anzhiyu-right-widget" id="card-wechat" onclick="null"><div id="flip-wrapper"><div id="flip-content"><div class="face" style="background: url(https://bu.dusays.com/2023/01/13/63c02edf44033.png) center center / 100% no-repeat"></div><div class="back face" style="background: url(https://bu.dusays.com/2023/05/13/645fa415e8694.png) center center / 100% no-repeat"></div></div></div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-history"></i><span>最近发布</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/20/40.%E4%BB%A3%E7%A0%81%E4%BC%98%E5%8C%96/" title="CodeOptimization">CodeOptimization</a><time datetime="2024-02-20T13:20:08.108Z" title="发表于 2024-02-20 21:20:08">2024-02-20</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/20/39.%E4%BB%A3%E7%A0%81%E4%BC%98%E5%8C%96/" title="CodeOptimization">CodeOptimization</a><time datetime="2024-02-20T13:17:42.096Z" title="发表于 2024-02-20 21:17:42">2024-02-20</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/12/4.Linux/" title="Linux">Linux</a><time datetime="2024-02-12T12:56:07.798Z" title="发表于 2024-02-12 20:56:07">2024-02-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/12/5.Spring/" title="Spring">Spring</a><time datetime="2024-02-12T12:56:07.798Z" title="发表于 2024-02-12 20:56:07">2024-02-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/12/8.MyBatisPlus/" title="MyBatisPlus">MyBatisPlus</a><time datetime="2024-02-12T12:56:07.798Z" title="发表于 2024-02-12 20:56:07">2024-02-12</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div id="footer-bar-tips"><div class="copyright">&copy;2020 - 2024 By <a class="footer-bar-link" href="/" title="obscureline" target="_blank">obscureline</a></div></div><div id="footer-type-tips"></div><div class="js-pjax"><script>function subtitleType () {
+  fetch('https://v1.hitokoto.cn')
+    .then(response => response.json())
+    .then(data => {
+      if (true) {
+        const from = '出自 ' + data.from
+        const sub = []
+        sub.unshift(data.hitokoto, from)
+        window.typed = new Typed('#footer-type-tips', {
+          strings: sub,
+          startDelay: 300,
+          typeSpeed: 150,
+          loop: true,
+          backSpeed: 50,
+        })
+      } else {
+        document.getElementById('footer-type-tips').innerHTML = data.hitokoto
+      }
+    })
+}
+
+if (true) {
+  if (typeof Typed === 'function') {
+    subtitleType()
+  } else {
+    getScript('https://cdn.cbd.int/typed.js@2.1.0/dist/typed.umd.js').then(subtitleType)
+  }
+} else {
+  subtitleType()
+}
+</script></div></div><div class="footer-bar-right"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/anzhiyu-c/hexo-theme-anzhiyu" title="主题">主题</a></div></div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">文章</div><div class="length-num">40</div></a><a href="/tags/" title="tag"><div class="headline">标签</div><div class="length-num">36</div></a><a href="/categories/" title="category"><div class="headline">分类</div><div class="length-num">36</div></a></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="显示模式"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>显示模式</span></a></div><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://blog.anheyu.com/" title="博客"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/favicon.ico" alt="博客"/><span class="back-menu-item-text">博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://image.anheyu.com/" title="安知鱼图床"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://image.anheyu.com/favicon.ico" alt="安知鱼图床"/><span class="back-menu-item-text">安知鱼图床</span></a></div></div></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 友链</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/link/"><i class="anzhiyufont anzhiyu-icon-link faa-tada" style="font-size: 0.9em;"></i><span> 友人帐</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/comments/"><i class="anzhiyufont anzhiyu-icon-envelope faa-tada" style="font-size: 0.9em;"></i><span> 留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 我的</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/album/"><i class="anzhiyufont anzhiyu-icon-images faa-tada" style="font-size: 0.9em;"></i><span> 相册集</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/essay/"><i class="anzhiyufont anzhiyu-icon-lightbulb faa-tada" style="font-size: 0.9em;"></i><span> 闲言碎语</span></a></li></ul></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/music/"><span> 音乐馆</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/about/"><span> 关于</span></a></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/Activiti/" style="font-size: 0.88rem;">Activiti<sup>1</sup></a><a href="/tags/CodeOptimization/" style="font-size: 0.88rem;">CodeOptimization<sup>2</sup></a><a href="/tags/Docker/" style="font-size: 0.88rem;">Docker<sup>1</sup></a><a href="/tags/Elasticsearch/" style="font-size: 0.88rem;">Elasticsearch<sup>1</sup></a><a href="/tags/HelloWorld/" style="font-size: 0.88rem;">HelloWorld<sup>0</sup></a><a href="/tags/IO/" style="font-size: 0.88rem;">IO<sup>1</sup></a><a href="/tags/JDK/" style="font-size: 0.88rem;">JDK<sup>2</sup></a><a href="/tags/JSON/" style="font-size: 0.88rem;">JSON<sup>2</sup></a><a href="/tags/JdbcTemplate/" style="font-size: 0.88rem;">JdbcTemplate<sup>1</sup></a><a href="/tags/Kafka/" style="font-size: 0.88rem;">Kafka<sup>1</sup></a><a href="/tags/Linux/" style="font-size: 0.88rem;">Linux<sup>1</sup></a><a href="/tags/MinIO/" style="font-size: 0.88rem;">MinIO<sup>1</sup></a><a href="/tags/MongoDB/" style="font-size: 0.88rem;">MongoDB<sup>1</sup></a><a href="/tags/MyBatis/" style="font-size: 0.88rem;">MyBatis<sup>1</sup></a><a href="/tags/MyBatisPlus/" style="font-size: 0.88rem;">MyBatisPlus<sup>1</sup></a><a href="/tags/Preamble/" style="font-size: 0.88rem;">Preamble<sup>1</sup></a><a href="/tags/RabbitMQ/" style="font-size: 0.88rem;">RabbitMQ<sup>1</sup></a><a href="/tags/Redis/" style="font-size: 0.88rem;">Redis<sup>1</sup></a><a href="/tags/SQL/" style="font-size: 0.88rem;">SQL<sup>3</sup></a><a href="/tags/Spring/" style="font-size: 0.88rem;">Spring<sup>1</sup></a><a href="/tags/SpringCache/" style="font-size: 0.88rem;">SpringCache<sup>1</sup></a><a href="/tags/SpringCloud/" style="font-size: 0.88rem;">SpringCloud<sup>1</sup></a><a href="/tags/SpringCloudAlibaba/" style="font-size: 0.88rem;">SpringCloudAlibaba<sup>1</sup></a><a href="/tags/SpringMVC/" style="font-size: 0.88rem;">SpringMVC<sup>1</sup></a><a href="/tags/SpringSecurity/" style="font-size: 0.88rem;">SpringSecurity<sup>1</sup></a><a href="/tags/UI/" style="font-size: 0.88rem;">UI<sup>1</sup></a><a href="/tags/VUE/" style="font-size: 0.88rem;">VUE<sup>1</sup></a><a href="/tags/Web/" style="font-size: 0.88rem;">Web<sup>1</sup></a><a href="/tags/%E4%BA%8B%E5%8A%A1/" style="font-size: 0.88rem;">事务<sup>1</sup></a><a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 0.88rem;">多线程<sup>1</sup></a><a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 0.88rem;">数据结构<sup>1</sup></a><a href="/tags/%E7%83%AD%E9%97%A8%E9%A1%B9%E7%9B%AE1/" style="font-size: 0.88rem;">热门项目1<sup>1</sup></a><a href="/tags/%E7%83%AD%E9%97%A8%E9%A1%B9%E7%9B%AE2/" style="font-size: 0.88rem;">热门项目2<sup>1</sup></a><a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 0.88rem;">算法<sup>1</sup></a><a href="/tags/%E7%B4%A2%E5%BC%95/" style="font-size: 0.88rem;">索引<sup>1</sup></a><a href="/tags/%E9%9B%86%E5%90%88%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/" style="font-size: 0.88rem;">集合底层原理<sup>1</sup></a></div></div><hr/></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button id="go-up" type="button" title="回到顶部"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="nav-music"><a id="nav-music-hoverTips" onclick="anzhiyu.musicToggle()" accesskey="m">播放音乐</a><div id="console-music-bg"></div><meting-js id="8152976493" server="netease" type="playlist" mutex="true" preload="none" theme="var(--anzhiyu-main)" data-lrctype="0" order="random" volume="0.7"></meting-js></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div><div class="rightMenu-item" id="menu-music-toggle"><i class="anzhiyufont anzhiyu-icon-play"></i><span>播放音乐</span></div><div class="rightMenu-item" id="menu-music-back"><i class="anzhiyufont anzhiyu-icon-backward"></i><span>切换到上一首</span></div><div class="rightMenu-item" id="menu-music-forward"><i class="anzhiyufont anzhiyu-icon-forward"></i><span>切换到下一首</span></div><div class="rightMenu-item" id="menu-music-playlist" onclick="window.open(&quot;https://y.qq.com/n/ryqq/playlist/8802438608&quot;, &quot;_blank&quot;);" style="display: none;"><i class="anzhiyufont anzhiyu-icon-radio"></i><span>查看所有歌曲</span></div><div class="rightMenu-item" id="menu-music-copyMusicName"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制歌名</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.cbd.int/@fancyapps/ui@5.0.28/dist/fancybox/fancybox.umd.js"></script><script src="https://cdn.cbd.int/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://cdn.cbd.int/vanilla-lazyload@17.8.5/dist/lazyload.iife.min.js"></script><script src="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.cbd.int/pangu@4.0.7/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><canvas id="universe"></canvas><script async src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/dark/dark.js"></script><script>// 消除控制台打印
+var HoldLog = console.log;
+console.log = function () {};
+let now1 = new Date();
+queueMicrotask(() => {
+  const Log = function () {
+    HoldLog.apply(console, arguments);
+  }; //在恢复前输出日志
+  const grt = new Date("04/01/2021 00:00:00"); //此处修改你的建站时间或者网站上线时间
+  now1.setTime(now1.getTime() + 250);
+  const days = (now1 - grt) / 1000 / 60 / 60 / 24;
+  const dnum = Math.floor(days);
+  const ascll = [
+    `欢迎使用安知鱼!`,
+    `生活明朗, 万物可爱`,
+    `
+        
+       █████╗ ███╗   ██╗███████╗██╗  ██╗██╗██╗   ██╗██╗   ██╗
+      ██╔══██╗████╗  ██║╚══███╔╝██║  ██║██║╚██╗ ██╔╝██║   ██║
+      ███████║██╔██╗ ██║  ███╔╝ ███████║██║ ╚████╔╝ ██║   ██║
+      ██╔══██║██║╚██╗██║ ███╔╝  ██╔══██║██║  ╚██╔╝  ██║   ██║
+      ██║  ██║██║ ╚████║███████╗██║  ██║██║   ██║   ╚██████╔╝
+      ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝    ╚═════╝
+        
+        `,
+    "已上线",
+    dnum,
+    "天",
+    "©2020 By 安知鱼 V1.6.12",
+  ];
+  const ascll2 = [`NCC2-036`, `调用前置摄像头拍照成功，识别为【小笨蛋】.`, `Photo captured: `, `🤪`];
+
+  setTimeout(
+    Log.bind(
+      console,
+      `\n%c${ascll[0]} %c ${ascll[1]} %c ${ascll[2]} %c${ascll[3]}%c ${ascll[4]}%c ${ascll[5]}\n\n%c ${ascll[6]}\n`,
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      ""
+    )
+  );
+  setTimeout(
+    Log.bind(
+      console,
+      `%c ${ascll2[0]} %c ${ascll2[1]} %c \n${ascll2[2]} %c\n${ascll2[3]}\n`,
+      "color:white; background-color:#4fd953",
+      "",
+      "",
+      'background:url("https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/tinggge.gif") no-repeat;font-size:450%'
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c WELCOME %c 你好，小笨蛋.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(
+      console,
+      "%c ⚡ Powered by 安知鱼 %c 你正在访问 obscureline 的博客.",
+      "color:white; background-color:#f0ad4e",
+      ""
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c W23-12 %c 你已打开控制台.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(console, "%c S013-782 %c 你现在正处于监控中.", "color:white; background-color:#d9534f", "")
+  );
+});</script><script async src="/anzhiyu/random.js"></script><div class="js-pjax"><input type="hidden" name="page-type" id="page-type" value="post"></div><script>var visitorMail = "";
+</script><script async data-pjax src="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/waterfall/waterfall.js"></script><script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/qrcodejs/1.0.0/qrcode.min.js"></script><script src="/js/anzhiyu/right_click_menu.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/aplayer/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.cbd.int/anzhiyu-blog-static@1.0.1/js/APlayer.min.js"></script><script src="https://cdn.cbd.int/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.cbd.int/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+  // removeEventListener scroll 
+  anzhiyu.removeGlobalFnEvent('pjax')
+  anzhiyu.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script charset="UTF-8" src="https://cdn.cbd.int/anzhiyu-theme-static@1.1.5/accesskey/accesskey.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div></body></html>
